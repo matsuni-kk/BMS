@@ -124,3 +124,5 @@ novel_management/
 2. setting_test_results.mdに記録
 3. 関連する設定ファイルを特定
 4. 修正案を作成して検証
+
+最終更新日: 2025/1/16
