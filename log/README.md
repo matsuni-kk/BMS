@@ -1,15 +1,14 @@
 # Current Tasks
 
-このディレクトリは現在進行中のタスクを管理するための場所です。
+このディレクトリは現在進行中のタスクログを管理するための場所です。
 
 ## ディレクトリ構造
 ```
-current_task/
+log/
 ├── README.md
-└── tasks/
-    └── YYYYMMDD/
-        ├── task_description.md
-        └── progress.md
+└── YYYYMMDD/
+   ├── task_description.md
+   └── progress.md
 ```
 
 ## 使用方法
@@ -18,8 +17,7 @@ current_task/
    - フォルダ名: `YYYYMMDD`（例：20250116）
 
 2. 各タスクフォルダには以下のファイルを含める：
-   - `task_description.md`: タスクの詳細な説明
-   - `progress.md`: 進捗状況の記録
+   - `task_description.md`: タスクの詳細な説明と進捗状況
 
 ## タスク管理のルール
 

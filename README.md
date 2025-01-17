@@ -14,6 +14,7 @@
    - daily_reflections/README.md
    - emotional story/README.md
    - ideas/README.md
+   - log/README.md
    - Note/README.md
    - novel_management/README.md
    - prompts/README.md
@@ -30,6 +31,7 @@
 - 依頼するほとんどのタスクはコーディングとは関係ないことを考慮
 - powershellでは「&&」を使用しない
 - 絶対に生成時に省略行為は行わない
+- すべてのタスク実行時にlog/README.mdに従って作業ログを記録する
 
 ## テスト駆動処理
 - 必ずタスクはテストドリブンで処理を行う
@@ -38,6 +40,24 @@
 - テスト粒度は細かく設定し、クリアするまで自動で反復
 
 # プロジェクト構造
+
+### log/
+タスクの進捗管理と記録のためのディレクトリ
+
+#### ディレクトリ構造
+```
+log/
+├── README.md
+└── YYYYMMDD/
+    ├── task_description.md
+    └── progress.md
+```
+
+#### 使用方法
+1. 新規タスク開始時：YYYYMMDDフォーマットでフォルダを作成
+2. 各タスクフォルダには以下を含める：
+   - task_description.md：タスクの詳細説明
+   - progress.md：進捗状況の記録
 
 ### Note/
 note執筆のためのディレクトリ。執筆中の文章と過去の文章を体系的に管理します。
