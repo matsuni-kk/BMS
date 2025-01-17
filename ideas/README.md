@@ -2,14 +2,15 @@
 
 このフォルダについて：
 - 新規のアイデアや実験的なプロジェクトを格納するためのフォルダです。
-- 作業を行う際は、必ずcurrent_taskフォルダのcurrent_taskファイルに作業内容を記録してください。
+- 作業を行う際は、必ずtasks/business_tasks/YYYYMMDD/のディレクトリに作業内容を記録してください。
+- 作業内容はtask_detail.mdファイルに記録します。
+※YYYYMMDDは作業日（例：20250117）を表します。
 
 ## ディレクトリ構造
 ```
 ideas/
 ├── created_idea/          # 実装済みアイデア管理
-│   ├── tests/           # 実装済みアイデアのテスト
-│   └── current_task/    # 現在の作業タスク
+│   └── tests/           # 実装済みアイデアのテスト
 ├── idea_process/         # アイデア創出プロセス
 │   ├── templates/       # 各種テンプレート
 │   ├── test_cases/     # テストケース
