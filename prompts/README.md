@@ -10,7 +10,7 @@
 ## ディレクトリ構造
 ```
 prompts/
-├── prompt-business/           # ビジネス用プロンプト
+├── prompt_business/           # ビジネス用プロンプト
 │   ├── meeting_minutes/      # 議事録関連
 │   ├── project_summary/      # プロジェクト概要
 │   ├── customer_service/     # カスタマーサービス

@@ -1,4 +1,4 @@
-# prompt-bissines
+# prompt_bissines
 
 このディレクトリは、ビジネス関連のプロンプトテンプレートを管理するための場所です。
 
