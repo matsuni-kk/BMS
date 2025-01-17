@@ -2,7 +2,42 @@
 
 このリポジトリは、ビジネスマネジメントシステムの包括的なドキュメントとリソースを管理するためのものです。
 
-## プロジェクト構造
+# システムプロンプト
+
+## 重要：各ディレクトリのREADME.md参照について
+作業を開始する前に、以下の手順で必要な情報を必ず確認してください：
+
+1. 最上位階層（このファイル）のREADME.mdを熟読し、全体の構造を理解する
+2. **作業対象となる全てのディレクトリのREADME.mdを必ず読む**
+   - app_specifications/README.md
+   - consult_techniques/README.md
+   - daily_reflections/README.md
+   - emotional story/README.md
+   - ideas/README.md
+   - Note/README.md
+   - novel_management/README.md
+   - prompts/README.md
+   - sales/README.md
+   - sales_techniques/README.md
+   - tasks/README.md
+   - その他のサブディレクトリのREADME.md
+3. 作業内容に関連する可能性のある全てのディレクトリのREADME.mdを参照する
+4. README.mdの内容は随時更新される可能性があるため、作業ごとに最新の内容を確認する
+
+## 共通ルール
+- 日本語で応対
+- 「D:\BMS」直下にフォルダを作るときは必ずreadmeファイルを作成
+- 依頼するほとんどのタスクはコーディングとは関係ないことを考慮
+- powershellでは「&&」を使用しない
+- 絶対に生成時に省略行為は行わない
+
+## テスト駆動開発
+- 必ずテストドリブンで開発を行う
+- タスクに合わせた詳細なテスト項目を事前に作成
+- テスト用に別途ファイルを作成
+- テスト粒度は細かく設定し、クリアするまで自動で反復
+
+# プロジェクト構造
 
 ### Note/
 note執筆のためのディレクトリ。執筆中の文章と過去の文章を体系的に管理します。
@@ -162,38 +197,3 @@ daily_reflections/
 ## メンテナンス
 
 各セクションのドキュメントは定期的に更新され、最新のプロセスとベストプラクティスを反映しています。更新や改善の提案は、issueまたはプルリクエストを通じて行ってください。
-
-# システムプロンプト
-
-## 重要：各ディレクトリのREADME.md参照について
-作業を開始する前に、以下の手順で必要な情報を必ず確認してください：
-
-1. 最上位階層（このファイル）のREADME.mdを熟読し、全体の構造を理解する
-2. **作業対象となる全てのディレクトリのREADME.mdを必ず読む**
-   - app_specifications/README.md
-   - consult_techniques/README.md
-   - daily_reflections/README.md
-   - emotional story/README.md
-   - ideas/README.md
-   - Note/README.md
-   - novel_management/README.md
-   - prompts/README.md
-   - sales/README.md
-   - sales_techniques/README.md
-   - tasks/README.md
-   - その他のサブディレクトリのREADME.md
-3. 作業内容に関連する可能性のある全てのディレクトリのREADME.mdを参照する
-4. README.mdの内容は随時更新される可能性があるため、作業ごとに最新の内容を確認する
-
-## 共通ルール
-- 日本語で応対
-- 「D:\BMS」直下にフォルダを作るときは必ずreadmeファイルを作成
-- 依頼するほとんどのタスクはコーディングとは関係ないことを考慮
-- powershellでは「&&」を使用しない
-- 絶対に生成時に省略行為は行わない
-
-## テスト駆動開発
-- 必ずテストドリブンで開発を行う
-- タスクに合わせた詳細なテスト項目を事前に作成
-- テスト用に別途ファイルを作成
-- テスト粒度は細かく設定し、クリアするまで自動で反復
