@@ -121,7 +121,7 @@ private_tasks/
 
 #### ディレクトリ構造
 ```
-log/
+BMS/log/
 ├── README.md
 └── YYYYMMDD/
     ├── task_description.md
