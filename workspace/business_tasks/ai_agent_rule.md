@@ -101,7 +101,7 @@ business_tasks/
 │           ├── input/    # 移動済みインプットデータ
 │           ├── output/   # タスク成果物
 │           └── task_detail.md
-├── weekly/               # 週次タスク（daily同様の構造）
+├── monthly/              # 月次タスク（daily同様の構造）
 ├── projects/             # プロジェクト単位のタスク
 └── archive/             # 完了タスクのアーカイブ
 ```
@@ -244,5 +244,18 @@ output/
 - タスクフォルダには必ずinput/とoutput/を作成
 - インプットデータは必ずinput/ディレクトリに配置
 - 成果物は必ずoutput/ディレクトリに配置
+- 月次タスクの記録について
+  - 基本的には日次フォルダ（daily）に記録
+  - 月次タスクはmonthlyフォルダで管理
+  - monthlyフォルダは以下の構造で管理：
+    ```
+    monthly/
+    └── YYYYMM/               # 年月フォルダ
+        ├── monthly_detail.md # 月次サマリー（当月のdaily全て参照）
+        ├── input/           # 月次タスクの入力データ
+        └── output/          # 月次タスクの成果物
+    ```
+  - monthly_detail.mdには対象月のdailyタスクすべてを参照し、
+    月単位での進捗、成果、課題を記録
 
 最終更新日: 2025/1/18
