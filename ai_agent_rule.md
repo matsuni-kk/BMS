@@ -26,6 +26,7 @@
    - information/sales_techniques/ai_agent_rule
    - workspace/business_tasks/ai_agent_rule
    - workspace/private_tasks/ai_agent_rule
+   - tools/ai_agent_rule
    - その他のサブディレクトリのREADME.md
 3. 作業内容に関連する可能性のある全てのディレクトリのai_agent_ruleを参照する
 4. ai_agent_ruleの内容は随時更新される可能性があるため、作業ごとに最新の内容を確認する
@@ -45,6 +46,20 @@
 - テスト粒度は細かく設定し、クリアするまで自動で反復
 
 # プロジェクト構造
+
+## tools/ - AIツール
+AIを活用した各種ツールを格納するディレクトリ。各ツールは独自のフォルダで管理され、以下の構造に従います：
+```
+tools/
+├── ai_agent_rule.md
+└── [tool_name]/
+    ├── README.md
+    ├── requirements.txt
+    └── src/
+```
+- 各ツールは独立して動作する形で実装
+- テスト駆動での開発を徹底
+- セキュリティとメンテナンス性を重視
 
 ## document/ - 論文や公式のドキュメント
 ### document/app_specifications/
@@ -181,6 +196,11 @@ business_tasks/
 │           └── task_detail.md
 ├── monthly/              # 月次タスク（daily同様の構造）
 ├── projects/             # プロジェクト単位のタスク
+│   └── project_name/    # プロジェクト別フォルダ
+│       ├── project_detail.md  # プロジェクト詳細
+│       ├── input/      # プロジェクトの入力データ
+│       └── output/     # プロジェクトの成果物
+├── playground/          # 人間とAIの協業作業スペース
 └── archive/             # 完了タスクのアーカイブ
 ```
 
@@ -199,6 +219,11 @@ private_tasks/
 │           └── task_detail.md
 ├── monthly/              # 月次タスク（daily同様の構造）
 ├── projects/             # プロジェクト単位のタスク
+│   └── project_name/    # プロジェクト別フォルダ
+│       ├── project_detail.md  # プロジェクト詳細
+│       ├── input/      # プロジェクトの入力データ
+│       └── output/     # プロジェクトの成果物
+├── playground/          # 人間とAIの協業作業スペース
 └── archive/             # 完了タスクのアーカイブ
 ```
 - `prompts/` - タスク管理用プロンプト
@@ -239,6 +264,12 @@ log/
    - 合わせて`task_name` ディレクトリに `input` 、`output`フォルダを作成してください。
    - 目的に応じて適切なプロンプトを選択
    - task_detail.mdテンプレートに従って記録
+
+3. playground環境の使用：
+   - 人間とAIが協業して一時的にファイルを編集する作業スペース
+   - business_tasksまたはprivate_tasksのplaygroundディレクトリを使用
+   - 作業完了後は適切なフォルダ（daily/monthly/projects）に移動
+   - 一時的な実験や検証にも使用可能
 
 ### 一般的な使用方法
 各ディレクトリには独自のai_agent_ruleファイルが含まれており、それぞれの領域の詳細な使用方法とガイドラインが記載されています。特定の領域の作業を開始する際は、該当するディレクトリのドキュメントを参照してください。
