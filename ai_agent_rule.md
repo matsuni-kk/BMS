@@ -179,7 +179,7 @@ business_tasks/
 │           ├── input/    # 移動済みインプットデータ
 │           ├── output/   # タスク成果物
 │           └── task_detail.md
-├── weekly/               # 週次タスク（daily同様の構造）
+├── monthly/              # 月次タスク（daily同様の構造）
 ├── projects/             # プロジェクト単位のタスク
 └── archive/             # 完了タスクのアーカイブ
 ```
@@ -197,7 +197,7 @@ private_tasks/
 │           ├── input/    # 移動済みインプットデータ
 │           ├── output/   # タスク成果物
 │           └── task_detail.md
-├── weekly/               # 週次タスク（daily同様の構造）
+├── monthly/              # 月次タスク（daily同様の構造）
 ├── projects/             # プロジェクト単位のタスク
 └── archive/             # 完了タスクのアーカイブ
 ```
