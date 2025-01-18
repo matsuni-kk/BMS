@@ -2,6 +2,11 @@
 
 このリポジトリは、ビジネスマネジメントシステムの包括的なドキュメントとリソースを管理するためのものです。
 
+※この文書は、フォルダディレクトリの役割を明確化するため再構成されました。以下の区分に従って整理していますが、情報の欠損は一切ありません：
+- document: 論文や公式のドキュメント
+- information: 手法やプロセス、テクニックなど
+- workspace: 各種作業
+
 # システムプロンプト
 
 ## 重要：各ディレクトリのai_agent_rule参照について
@@ -9,18 +14,18 @@
 
 1. 最上位階層（このファイル）のai_agent_ruleを熟読し、全体の構造を理解する
 2. **作業対象となる全てのディレクトリのai_agent_ruleを必ず読む**
-   - app_specifications/ai_agent_rule
-   - consult_techniques/ai_agent_rule
-   - daily_reflections/ai_agent_rule
-   - emotional story/ai_agent_rule
-   - ideas/ai_agent_rule
+   - document/app_specifications/ai_agent_rule
+   - information/consult_techniques/ai_agent_rule
+   - workspace/daily_reflections_workspace/ai_agent_rule
+   - information/emotional_story/ai_agent_rule
+   - workspace/ideas_workspace/ai_agent_rule
    - log/ai_agent_rule
-   - Note/ai_agent_rule
-   - novel_management/ai_agent_rule
+   - workspace/note_workspace/ai_agent_rule
+   - workspace/novel_workspace/ai_agent_rule
    - prompts/ai_agent_rule
-   - sales/ai_agent_rule
-   - sales_techniques/ai_agent_rule
-   - tasks/ai_agent_rule
+   - workspace/sales_workspace/ai_agent_rule
+   - information/sales_techniques/ai_agent_rule
+   - workspace/tasks_workspace/ai_agent_rule
    - その他のサブディレクトリのREADME.md
 3. 作業内容に関連する可能性のある全てのディレクトリのai_agent_ruleを参照する
 4. ai_agent_ruleの内容は随時更新される可能性があるため、作業ごとに最新の内容を確認する
@@ -41,58 +46,28 @@
 
 # プロジェクト構造
 
-### log/
-タスクの進捗管理と記録のためのディレクトリ
+## document/ - 論文や公式のドキュメント
+### document/app_specifications/
+アプリケーションの技術仕様を格納するディレクトリ
+- `api_specifications/` - APIインターフェースの詳細仕様
 
-#### ディレクトリ構造
-```
-log/
-├── README.md
-└── YYYYMMDD/
-    ├── task_description.md
-    └── progress.md
-```
+## information/ - 手法やプロセス、テクニック
+### information/sales_techniques/
+営業技法とノウハウのナレッジベース。効果的な営業活動のための理論的フレームワーク、業界標準のベストプラクティス、および方法論を提供します。
+- analysis/ - 顧客分析手法とフレームワーク
+- follow_up/ - フォローアップ戦略と理論
+- negotiation/ - 交渉スキルと理論体系
+- presentation/ - プレゼンテーション技法の体系
+- processes/ - 営業プロセスの方法論
+- storytelling/ - ストーリーテリング手法の体系
 
-#### 使用方法
-1. 新規タスク開始時：YYYYMMDDフォーマットでフォルダを作成
-2. 各タスクフォルダには以下を含める：
-   - task_description.md：タスクの詳細説明
-   - progress.md：進捗状況の記録
-
-### Note/
-note執筆のためのディレクトリ。執筆中の文章と過去の文章を体系的に管理します。
-
-#### ディレクトリ構造
-```
-Note/
-├── past_articles/        # 完成した過去の文章
-│   └── YYYYMMDD/        # 作成日付ごとのフォルダ
-│       └── 作品名.md
-├── writing_in_progress/ # 執筆中の文章
-│   └── note_name/      # 記事ごとのフォルダ
-│       ├── 要件.md     # 記事の要件定義
-│       └── 文章.md     # 実際の記事
-└── README.md
-```
-
-#### 使用方法
-1. 新規記事作成時：
-   - writing_in_progress/に記事名のフォルダを作成
-   - 要件.mdで記事の要件を定義
-   - 文章.mdで実際の記事を執筆
-2. 記事完成時：
-   - past_articles/に日付フォルダを作成（YYYYMMDD形式）
-   - 完成した記事を移動
-3. 文体の統一：
-   - 過去の記事を参考に文体を統一
-   - 要件定義に従って執筆
-
-### daily_reflections/
+## workspace/ - 各種作業
+### workspace/daily_reflections_workspace/
 日々の所感と課題管理のためのディレクトリ。ビジネスとプライベートの振り返りを体系的に管理します。
 
 #### ディレクトリ構造
 ```
-daily_reflections/
+workspace/daily_reflections_workspace/
 ├── business/           # ビジネス関連の日記
 │   └── YYYYMMDD/
 │       └── reflection.md
@@ -130,11 +105,7 @@ daily_reflections/
 - 重要な気づきのプロジェクト反映
 - プロンプトの有効性評価と改善
 
-### app_specifications/
-アプリケーションの技術仕様を格納するディレクトリ
-- `api_specifications/` - APIインターフェースの詳細仕様
-
-### ideas/
+### workspace/ideas_workspace/
 創造的なアイデア管理とプロセスに関するドキュメント
 - `created_idea/` - 生成されたアイデアの管理
 - `idea_process/` - アイデア創出プロセスとテンプレート
@@ -142,7 +113,35 @@ daily_reflections/
   - スコアリングガイド
   - プロセステンプレート
 
-### novel_management/
+### workspace/note_workspace/
+note執筆のためのディレクトリ。執筆中の文章と過去の文章を体系的に管理します。
+
+#### ディレクトリ構造
+```
+workspace/note_workspace/
+├── past_articles/        # 完成した過去の文章
+│   └── YYYYMMDD/        # 作成日付ごとのフォルダ
+│       └── 作品名.md
+├── writing_in_progress/ # 執筆中の文章
+│   └── note_name/      # 記事ごとのフォルダ
+│       ├── 要件.md     # 記事の要件定義
+│       └── 文章.md     # 実際の記事
+└── README.md
+```
+
+#### 使用方法
+1. 新規記事作成時：
+   - writing_in_progress/に記事名のフォルダを作成
+   - 要件.mdで記事の要件を定義
+   - 文章.mdで実際の記事を執筆
+2. 記事完成時：
+   - past_articles/に日付フォルダを作成（YYYYMMDD形式）
+   - 完成した記事を移動
+3. 文体の統一：
+   - 過去の記事を参考に文体を統一
+   - 要件定義に従って執筆
+
+### workspace/novel_workspace/
 小説制作と管理のためのリソース
 - `created_story/` - 作成された物語の設定と管理
   - キャラクター設定
@@ -156,22 +155,14 @@ daily_reflections/
   - シーン
   - レビュー
 
-### prompts/
-ビジネス関連のプロンプトテンプレート
-- `prompt_bissines/`
-  - 議事録プロンプト
-  - プロジェクト概要プロンプト
+### workspace/sales_workspace/
+実際の営業活動の実務管理用ディレクトリ。
+- customers/ - 顧客ごとの情報管理（日報・月報など）
+- projects/ - プロジェクトごとの進捗管理
+- reports/ - 営業報告書
+- tools/ - 営業支援ツール
 
-### sales_techniques/
-営業技法とカスタマーリレーションのリソース
-- analysis/ - 顧客分析手法
-- follow_up/ - フォローアップ戦略
-- negotiation/ - 交渉スキル
-- presentation/ - プレゼンテーション技法
-- processes/ - 営業プロセス
-- storytelling/ - ストーリーテリングプロセス
-
-### tasks/
+### workspace/tasks_workspace/
 タスク管理システム
 - `business_tasks/` - ビジネス関連タスク
   - 日付ごとのフォルダ（YYYYMMDD形式）
@@ -185,6 +176,30 @@ daily_reflections/
       - input/ - タスクの入力データ
       - output/ - タスクの成果物
       - task_detail.md - タスク詳細
+
+## log/ - タスクログ管理
+タスクの進捗管理と記録のためのディレクトリ
+
+#### ディレクトリ構造
+```
+log/
+├── README.md
+└── YYYYMMDD/
+    ├── task_description.md
+    └── progress.md
+```
+
+#### 使用方法
+1. 新規タスク開始時：YYYYMMDDフォーマットでフォルダを作成
+2. 各タスクフォルダには以下を含める：
+   - task_description.md：タスクの詳細説明
+   - progress.md：進捗状況の記録
+
+## prompts/ - プロンプト管理
+ビジネス関連のプロンプトテンプレート
+- `prompt_bissines/`
+  - 議事録プロンプト
+  - プロジェクト概要プロンプト
 
 ## 使用方法
 
