@@ -21,9 +21,11 @@
    - log/ai_agent_rule
    - workspace/note_workspace/ai_agent_rule
    - workspace/novel_workspace/ai_agent_rule
+   - prompts/ai_agent_rule
    - workspace/sales_workspace/ai_agent_rule
    - information/sales_techniques/ai_agent_rule
-   - workspace/tasks_workspace/ai_agent_rule
+   - workspace/business_tasks/ai_agent_rule
+   - workspace/private_tasks/ai_agent_rule
    - その他のサブディレクトリのREADME.md
 3. 作業内容に関連する可能性のある全てのディレクトリのai_agent_ruleを参照する
 4. ai_agent_ruleの内容は随時更新される可能性があるため、作業ごとに最新の内容を確認する
@@ -164,21 +166,41 @@ workspace/note_workspace/
 - reports/ - 営業報告書
 - tools/ - 営業支援ツール
 - prompts/ - 営業活動用プロンプト
+### workspace/business_tasks/
+ビジネスタスク管理システム。tasklist.tsvでタスク一覧を管理し、日付ごとのフォルダでタスクを整理します。
 
-### workspace/tasks_workspace/
-タスク管理システム
-- `business_tasks/` - ビジネス関連タスク
-  - 日付ごとのフォルダ（YYYYMMDD形式）
-    - タスクごとの管理フォルダ
-      - input/ - タスクの入力データ
-      - output/ - タスクの成果物
-      - task_detail.md - タスク詳細
-- `private_tasks/` - プライベート関連タスク
-  - 日付ごとのフォルダ（YYYYMMDD形式）
-    - タスクごとの管理フォルダ
-      - input/ - タスクの入力データ
-      - output/ - タスクの成果物
-      - task_detail.md - タスク詳細
+```
+business_tasks/
+├── tasklist.tsv           # タスク一覧・進捗管理
+├── input/                 # 初期インプットデータ置き場
+├── daily/                 # 日次タスク
+│   └── YYYYMMDD/         # 日付ごとのフォルダ
+│       └── task_name/    # タスク別フォルダ
+│           ├── input/    # 移動済みインプットデータ
+│           ├── output/   # タスク成果物
+│           └── task_detail.md
+├── weekly/               # 週次タスク（daily同様の構造）
+├── projects/             # プロジェクト単位のタスク
+└── archive/             # 完了タスクのアーカイブ
+```
+
+### workspace/private_tasks/
+プライベートタスク管理システム。tasklist.tsvでタスク一覧を管理し、日付ごとのフォルダでタスクを整理します。
+
+```
+private_tasks/
+├── tasklist.tsv           # タスク一覧・進捗管理
+├── input/                 # 初期インプットデータ置き場
+├── daily/                 # 日次タスク
+│   └── YYYYMMDD/         # 日付ごとのフォルダ
+│       └── task_name/    # タスク別フォルダ
+│           ├── input/    # 移動済みインプットデータ
+│           ├── output/   # タスク成果物
+│           └── task_detail.md
+├── weekly/               # 週次タスク（daily同様の構造）
+├── projects/             # プロジェクト単位のタスク
+└── archive/             # 完了タスクのアーカイブ
+```
 - `prompts/` - タスク管理用プロンプト
 
 ## log/ - タスクログ管理
@@ -203,7 +225,7 @@ log/
 
 ### タスク管理のルール
 1. ビジネスタスクの場合：
-   - ビジネス関連のタスクは `tasks/business_tasks/YYYYMMDD/task_name` ディレクトリに起票
+   - ビジネス関連のタスクは `workspace/business_tasks/daily/YYYYMMDD/task_name` ディレクトリに起票
    - `YYYYMMDD` はタスクが依頼された日付（例: 20250117）
    - `task_name` はタスクの内容を簡潔に表した名称
    - 合わせて`task_name` ディレクトリに `input` 、`output`フォルダを作成してください。
@@ -211,7 +233,7 @@ log/
    - task_detail.mdテンプレートに従って記録
 
 2. プライベートタスクの場合：
-   - プライベート関連のタスクは `tasks/private_tasks/YYYYMMDD/task_name` ディレクトリに起票
+   - プライベート関連のタスクは `workspace/private_tasks/daily/YYYYMMDD/task_name` ディレクトリに起票
    - `YYYYMMDD` はタスクが依頼された日付（例: 20250117）
    - `task_name` はタスクの内容を簡潔に表した名称
    - 合わせて`task_name` ディレクトリに `input` 、`output`フォルダを作成してください。
@@ -219,7 +241,7 @@ log/
    - task_detail.mdテンプレートに従って記録
 
 ### 一般的な使用方法
-各ディレクトリには独自のREADMEファイルが含まれており、それぞれの領域の詳細な使用方法とガイドラインが記載されています。特定の領域の作業を開始する際は、該当するディレクトリのドキュメントを参照してください。
+各ディレクトリには独自のai_agent_ruleファイルが含まれており、それぞれの領域の詳細な使用方法とガイドラインが記載されています。特定の領域の作業を開始する際は、該当するディレクトリのドキュメントを参照してください。
 
 ## 開発環境
 
