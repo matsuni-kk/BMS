@@ -66,6 +66,39 @@ tools/
 アプリケーションの技術仕様を格納するディレクトリ
 - `api_specifications/` - APIインターフェースの詳細仕様
 
+### document/papers/ - 研究論文管理
+主にLLM（Large Language Model）関連の研究論文を体系的に管理するディレクトリ。
+
+#### ディレクトリ構造
+```
+papers/
+├── ai_agent_rule.md
+└── llm/
+    ├── applications/    - LLMの応用研究論文
+    ├── architectures/   - モデル構造研究論文
+    ├── evaluations/     - 評価手法研究論文
+    ├── fine_tuning/     - 適応学習研究論文
+    └── prompting/       - プロンプト工学研究論文
+```
+
+#### 論文管理ルール
+1. ファイル命名規則
+   - 形式：`YYYY_AuthorName_Title.pdf`
+   - 年号は論文の発表年を使用
+   - 著者名は筆頭著者のみ使用
+   - タイトルは主要な単語をCamelCaseで連結
+
+2. メタデータ管理
+   - 各フォルダの`index.md`に論文の要約、キーワード、主要な発見を記録
+   - 実装コードへのリンクがある場合は保存
+
+3. 分類基準
+   - applications/ - 実用的な応用や実装に関する論文
+   - architectures/ - モデルアーキテクチャや構造に関する論文
+   - evaluations/ - 評価手法や性能測定に関する論文
+   - fine_tuning/ - ファインチューニングや適応学習に関する論文
+   - prompting/ - プロンプトエンジニアリングに関する論文
+
 ## information/ - 手法やプロセス、テクニック
 ### information/sales_techniques/
 営業技法とノウハウのナレッジベース。効果的な営業活動のための理論的フレームワーク、業界標準のベストプラクティス、および方法論を提供します。
