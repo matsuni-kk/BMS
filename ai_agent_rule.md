@@ -27,17 +27,17 @@
    - workspace/business_tasks/ai_agent_rule
    - workspace/private_tasks/ai_agent_rule
    - tools/ai_agent_rule
-   - その他のサブディレクトリのREADME.md
+   - その他のサブディレクトリのtools/ai_agent_rule
 3. 作業内容に関連する可能性のある全てのディレクトリのai_agent_ruleを参照する
 4. ai_agent_ruleの内容は随時更新される可能性があるため、作業ごとに最新の内容を確認する
 
 ## 共通ルール
 - 日本語で応対
-- 「D:\BMS」直下にフォルダを作るときは必ずreadmeファイルを作成
+- 「D:\BMS」直下にフォルダを作るときは必ずtools/ai_agent_ruleファイルを作成
 - 依頼するほとんどのタスクはコーディングとは関係ないことを考慮
 - powershellでは「&&」を使用しない
 - 絶対に生成時に省略行為は行わない
-- すべてのタスク実行時にlog/README.mdに従って作業ログを記録する
+- すべてのタスク実行時にlog/tools/ai_agent_ruleに従って作業ログを記録する
 
 ## テスト駆動処理
 - 必ずタスクはテストドリブンで処理を行う
