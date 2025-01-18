@@ -2,7 +2,6 @@
 
 このリポジトリは、ビジネスマネジメントシステムの包括的なドキュメントとリソースを管理するためのものです。
 
-※この文書は、フォルダディレクトリの役割を明確化するため再構成されました。以下の区分に従って整理していますが、情報の欠損は一切ありません：
 - document: 論文や公式のドキュメント
 - information: 手法やプロセス、テクニックなど
 - workspace: 各種作業
@@ -22,7 +21,6 @@
    - log/ai_agent_rule
    - workspace/note_workspace/ai_agent_rule
    - workspace/novel_workspace/ai_agent_rule
-   - prompts/ai_agent_rule
    - workspace/sales_workspace/ai_agent_rule
    - information/sales_techniques/ai_agent_rule
    - workspace/tasks_workspace/ai_agent_rule
@@ -71,9 +69,10 @@ workspace/daily_reflections_workspace/
 ├── business/           # ビジネス関連の日記
 │   └── YYYYMMDD/
 │       └── reflection.md
-└── private/           # プライベート関連の日記
-    └── YYYYMMDD/
-        └── reflection.md
+├── private/           # プライベート関連の日記
+│   └── YYYYMMDD/
+│       └── reflection.md
+└── prompts/          # 日々の振り返り用プロンプト
 ```
 
 #### 記載内容
@@ -112,6 +111,7 @@ workspace/daily_reflections_workspace/
   - テストケース
   - スコアリングガイド
   - プロセステンプレート
+- `prompts/` - アイデア生成用プロンプト
 
 ### workspace/note_workspace/
 note執筆のためのディレクトリ。執筆中の文章と過去の文章を体系的に管理します。
@@ -126,6 +126,7 @@ workspace/note_workspace/
 │   └── note_name/      # 記事ごとのフォルダ
 │       ├── 要件.md     # 記事の要件定義
 │       └── 文章.md     # 実際の記事
+├── prompts/            # 記事作成用プロンプト
 └── README.md
 ```
 
@@ -154,6 +155,7 @@ workspace/note_workspace/
   - プロット
   - シーン
   - レビュー
+- `prompts/` - 小説制作用プロンプト
 
 ### workspace/sales_workspace/
 実際の営業活動の実務管理用ディレクトリ。
@@ -161,6 +163,7 @@ workspace/note_workspace/
 - projects/ - プロジェクトごとの進捗管理
 - reports/ - 営業報告書
 - tools/ - 営業支援ツール
+- prompts/ - 営業活動用プロンプト
 
 ### workspace/tasks_workspace/
 タスク管理システム
@@ -176,6 +179,7 @@ workspace/note_workspace/
       - input/ - タスクの入力データ
       - output/ - タスクの成果物
       - task_detail.md - タスク詳細
+- `prompts/` - タスク管理用プロンプト
 
 ## log/ - タスクログ管理
 タスクの進捗管理と記録のためのディレクトリ
@@ -194,12 +198,6 @@ log/
 2. 各タスクフォルダには以下を含める：
    - task_description.md：タスクの詳細説明
    - progress.md：進捗状況の記録
-
-## prompts/ - プロンプト管理
-ビジネス関連のプロンプトテンプレート
-- `prompt_bissines/`
-  - 議事録プロンプト
-  - プロジェクト概要プロンプト
 
 ## 使用方法
 
