@@ -159,7 +159,7 @@ emotional story/
 - レビュー要件
 
 ### 4. ログの保管
-- BMS\log配下の日付フォルダ（YYYYMMDD）内にtask_description.mdを作成
+- BMS\log配下の日付フォルダ（YYYYMMDD）内にtask_description.mdを作成する
 - タスクの詳細な説明と実行ログを記録
 - 定期的に進捗状況を更新
 - すべてのタスクログはBMS\logディレクトリに集約して管理
