@@ -103,6 +103,11 @@ private_tasks/
 │           └── task_detail.md
 ├── monthly/              # 月次タスク（daily同様の構造）
 ├── projects/             # プロジェクト単位のタスク
+│   └── project_name/    # プロジェクト別フォルダ
+│       ├── project_detail.md  # プロジェクト詳細
+│       ├── input/      # プロジェクトの入力データ
+│       └── output/     # プロジェクトの成果物
+├── playground/          # 人間とAIの協業作業スペース
 └── archive/             # 完了タスクのアーカイブ
 ```
 
@@ -257,5 +262,15 @@ output/
     ```
   - monthly_detail.mdには対象月のdailyタスクすべてを参照し、
     月単位での進捗、成果、課題を記録
+- プロジェクト管理について
+  - プロジェクトごとに固有の名前でフォルダを作成
+  - 各プロジェクトフォルダには以下を作成：
+    - project_detail.md：プロジェクトの詳細情報
+    - input/：プロジェクトの入力データ
+    - output/：プロジェクトの成果物
+- playground環境について
+  - 人間とAIが協業して一時的にファイルを編集する作業スペース
+  - 作業完了後は適切なフォルダ（daily/monthly/projects）に移動
+  - 一時的な実験や検証にも使用可能
 
 最終更新日: 2025/1/18
