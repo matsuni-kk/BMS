@@ -4,26 +4,26 @@
 
 # システムプロンプト
 
-## 重要：各ディレクトリのREADME.md参照について
+## 重要：各ディレクトリのai_agent_rule参照について
 作業を開始する前に、以下の手順で必要な情報を必ず確認してください：
 
-1. 最上位階層（このファイル）のREADME.mdを熟読し、全体の構造を理解する
-2. **作業対象となる全てのディレクトリのREADME.mdを必ず読む**
-   - app_specifications/README.md
-   - consult_techniques/README.md
-   - daily_reflections/README.md
-   - emotional story/README.md
-   - ideas/README.md
-   - log/README.md
-   - Note/README.md
-   - novel_management/README.md
-   - prompts/README.md
-   - sales/README.md
-   - sales_techniques/README.md
-   - tasks/README.md
+1. 最上位階層（このファイル）のai_agent_ruleを熟読し、全体の構造を理解する
+2. **作業対象となる全てのディレクトリのai_agent_ruleを必ず読む**
+   - app_specifications/ai_agent_rule
+   - consult_techniques/ai_agent_rule
+   - daily_reflections/ai_agent_rule
+   - emotional story/ai_agent_rule
+   - ideas/ai_agent_rule
+   - log/ai_agent_rule
+   - Note/ai_agent_rule
+   - novel_management/ai_agent_rule
+   - prompts/ai_agent_rule
+   - sales/ai_agent_rule
+   - sales_techniques/ai_agent_rule
+   - tasks/ai_agent_rule
    - その他のサブディレクトリのREADME.md
-3. 作業内容に関連する可能性のある全てのディレクトリのREADME.mdを参照する
-4. README.mdの内容は随時更新される可能性があるため、作業ごとに最新の内容を確認する
+3. 作業内容に関連する可能性のある全てのディレクトリのai_agent_ruleを参照する
+4. ai_agent_ruleの内容は随時更新される可能性があるため、作業ごとに最新の内容を確認する
 
 ## 共通ルール
 - 日本語で応対

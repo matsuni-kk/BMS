@@ -6,7 +6,7 @@
 ## ディレクトリ構造
 ```
 log/
-├── README.md
+├── ai_agent_rule.md
 └── YYYYMMDD/
    └── task_description.md  # タスクの説明と実行ログ
 ```

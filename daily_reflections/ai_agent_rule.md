@@ -5,7 +5,7 @@
 ## ディレクトリ構造
 ```
 daily_reflections/
-├── README.md
+├── ai_agent_rule.md
 ├── business/           # ビジネス関連の日記
 │   └── YYYYMMDD/
 │       └── reflection.md
