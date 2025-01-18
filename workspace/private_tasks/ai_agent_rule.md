@@ -115,6 +115,24 @@ private_tasks/
 └── archive/             # 完了タスクのアーカイブ
 ```
 
+## log/ - タスクログ管理
+タスクの進捗管理と記録のためのディレクトリ
+
+#### ディレクトリ構造
+```
+log/
+├── README.md
+└── YYYYMMDD/
+    ├── task_description.md
+    └── progress.md
+```
+
+#### 使用方法
+1. 新規タスク開始時：YYYYMMDDフォーマットでフォルダを作成
+2. 各タスクフォルダには以下を含める：
+   - task_description.md：タスクの詳細説明
+   - progress.md：進捗状況の記録
+
 ## task_detail.mdテンプレート
 
 ### 基本情報
