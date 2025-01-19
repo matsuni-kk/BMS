@@ -11,33 +11,26 @@
 ## 重要：各ディレクトリのai_agent_rule参照について
 作業を開始する前に、以下の手順で必要な情報を必ず確認してください：
 
-1. 最上位階層（このファイル）のai_agent_ruleを熟読し、全体の構造を理解する
-2. **作業対象となる全てのディレクトリのai_agent_ruleを必ず読む**
-   - document/app_specifications/ai_agent_rule
-   - information/consult_techniques/ai_agent_rule
-   - workspace/daily_reflections_workspace/ai_agent_rule
-   - information/emotional_story/ai_agent_rule
-   - workspace/ideas_workspace/ai_agent_rule
-   - log/ai_agent_rule
-   - workspace/note_workspace/ai_agent_rule
-   - workspace/novel_workspace/ai_agent_rule
-   - prompts/ai_agent_rule
-   - workspace/sales_workspace/ai_agent_rule
-   - information/sales_techniques/ai_agent_rule
-   - workspace/business_tasks/ai_agent_rule
-   - workspace/private_tasks/ai_agent_rule
-   - tools/ai_agent_rule
-   - その他のサブディレクトリのtools/ai_agent_rule
-3. 作業内容に関連する可能性のある全てのディレクトリのai_agent_ruleを参照する
+1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
+2. **以下のディレクトリのai_agent_ruleを必ず読む**
+   - document/ai_agent_rule.md
+   - information/ai_agent_rule.md
+   - log/ai_agent_rule.md
+   - mcp/ai_agent_rule.md
+   - tests/ai_agent_rule.md
+   - tools/ai_agent_rule.md
+   - workspace/ai_agent_rule.md
+3. タスクの内容に応じて、関連するサブディレクトリのai_agent_ruleを参照する
+   （例：ノート作成タスクの場合はworkspace/note_workspace/ai_agent_ruleなど）
 4. ai_agent_ruleの内容は随時更新される可能性があるため、作業ごとに最新の内容を確認する
 
 ## 共通ルール
 - 日本語で応対
-- 「D:\BMS」直下にフォルダを作るときは必ずtools/ai_agent_ruleファイルを作成
+- 「D:\BMS」直下にフォルダを作るときは必ずai_agent_ruleファイルを作成
 - 依頼するほとんどのタスクはコーディングとは関係ないことを考慮
 - powershellでは「&&」を使用しない
 - 絶対に生成時に省略行為は行わない
-- すべてのタスク実行時にlog/tools/ai_agent_ruleに従って作業ログを記録する
+- すべてのタスク実行時にlog/ai_agent_ruleに従って作業ログを記録する
 
 ## テスト駆動処理
 - 必ずタスクはテストドリブンで処理を行う
@@ -66,7 +59,6 @@ tools/
 アプリケーションの技術仕様を格納するディレクトリ
 - `api_specifications/` - APIインターフェースの詳細仕様
 
-
 ### document/tech_docs/ - 技術ドキュメント管理
 プログラミング言語、フレームワーク、パッケージ、開発ツールのドキュメントを体系的に管理するディレクトリ。
 
@@ -79,23 +71,6 @@ tech_docs/
 ├── packages/          - パッケージのドキュメント
 └── tools/             - 開発ツールのドキュメント
 ```
-
-#### ドキュメント管理ルール
-1. ファイル命名規則
-   - 形式：`[カテゴリ名]_[技術名]_[バージョン].md`
-   - 例：`python_basic_3.11.md`
-
-2. メタデータ管理
-   - バージョン情報の明記
-   - 更新日の記録
-   - 関連リンクの管理
-   - 互換性情報の記載
-
-3. コンテンツ要件
-   - 公式ドキュメントへのリンク
-   - 動作確認済みのコードサンプル
-   - 環境要件の明記
-   - 日本語/英語両方のリソース
 
 ### document/papers/ - 研究論文管理
 主にLLM（Large Language Model）関連の研究論文を体系的に管理するディレクトリ。
@@ -111,24 +86,6 @@ papers/
     ├── fine_tuning/     - 適応学習研究論文
     └── prompting/       - プロンプト工学研究論文
 ```
-
-#### 論文管理ルール
-1. ファイル命名規則
-   - 形式：`YYYY_AuthorName_Title.pdf`
-   - 年号は論文の発表年を使用
-   - 著者名は筆頭著者のみ使用
-   - タイトルは主要な単語をCamelCaseで連結
-
-2. メタデータ管理
-   - 各フォルダの`index.md`に論文の要約、キーワード、主要な発見を記録
-   - 実装コードへのリンクがある場合は保存
-
-3. 分類基準
-   - applications/ - 実用的な応用や実装に関する論文
-   - architectures/ - モデルアーキテクチャや構造に関する論文
-   - evaluations/ - 評価手法や性能測定に関する論文
-   - fine_tuning/ - ファインチューニングや適応学習に関する論文
-   - prompting/ - プロンプトエンジニアリングに関する論文
 
 ## information/ - 手法やプロセス、テクニック
 ### information/sales_techniques/
@@ -173,17 +130,6 @@ workspace/daily_reflections_workspace/
   - 自己啓発の進捗
   - その他の重要事項
 
-#### 使用方法
-1. 新規記録作成時は日付フォルダを作成（YYYYMMDD形式）
-2. `/prompts`から適切なプロンプトを選択
-3. reflection.mdに記録を作成
-4. 記載内容は具体的かつ詳細に
-5. ビジネス/プライベートを適切に分類
-
-#### メンテナンス
-- 定期的な振り返りと分析の実施
-- 重要な気づきのプロジェクト反映
-- プロンプトの有効性評価と改善
 
 ### workspace/ideas_workspace/
 創造的なアイデア管理とプロセスに関するドキュメント
@@ -211,17 +157,7 @@ workspace/note_workspace/
 └── README.md
 ```
 
-#### 使用方法
-1. 新規記事作成時：
-   - writing_in_progress/に記事名のフォルダを作成
-   - 要件.mdで記事の要件を定義
-   - 文章.mdで実際の記事を執筆
-2. 記事完成時：
-   - past_articles/に日付フォルダを作成（YYYYMMDD形式）
-   - 完成した記事を移動
-3. 文体の統一：
-   - 過去の記事を参考に文体を統一
-   - 要件定義に従って執筆
+
 
 ### workspace/novel_workspace/
 小説制作と管理のためのリソース
@@ -260,10 +196,6 @@ business_tasks/
 │           └── task_detail.md
 ├── monthly/              # 月次タスク（daily同様の構造）
 ├── projects/             # プロジェクト単位のタスク
-│   └── project_name/    # プロジェクト別フォルダ
-│       ├── project_detail.md  # プロジェクト詳細
-│       ├── input/      # プロジェクトの入力データ
-│       └── output/     # プロジェクトの成果物
 ├── playground/          # 人間とAIの協業作業スペース
 └── archive/             # 完了タスクのアーカイブ
 ```
@@ -276,21 +208,11 @@ private_tasks/
 ├── tasklist.tsv           # タスク一覧・進捗管理
 ├── input/                 # 初期インプットデータ置き場
 ├── daily/                 # 日次タスク
-│   └── YYYYMMDD/         # 日付ごとのフォルダ
-│       └── task_name/    # タスク別フォルダ
-│           ├── input/    # 移動済みインプットデータ
-│           ├── output/   # タスク成果物
-│           └── task_detail.md
 ├── monthly/              # 月次タスク（daily同様の構造）
 ├── projects/             # プロジェクト単位のタスク
-│   └── project_name/    # プロジェクト別フォルダ
-│       ├── project_detail.md  # プロジェクト詳細
-│       ├── input/      # プロジェクトの入力データ
-│       └── output/     # プロジェクトの成果物
 ├── playground/          # 人間とAIの協業作業スペース
 └── archive/             # 完了タスクのアーカイブ
 ```
-- `prompts/` - タスク管理用プロンプト
 
 ## log/ - タスクログ管理
 タスクの進捗管理と記録のためのディレクトリ
@@ -303,12 +225,6 @@ BMS/log/
     ├── task_description.md
     └── progress.md
 ```
-
-#### 使用方法
-1. 新規タスク開始時：YYYYMMDDフォーマットでフォルダを作成する
-2. 各タスクフォルダには以下を含める：
-   - task_description.md：タスクの詳細説明
-   - progress.md：進捗状況の記録
 
 ## 使用方法
 

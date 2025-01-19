@@ -1,5 +1,26 @@
 # workspaceのai_agent_rule.md
 
+## ログ記載の基本ルール
+
+- 全てのタスクは必ずlogディレクトリにログを記録
+- 各workspaceにあるlogディレクトリにタスクログを記録
+- タスク開始時と完了時に必ずログを更新
+
+### ディレクトリ構造
+```
+workspace/log/
+├── ai_agent_rule.md
+└── YYYYMMDD/
+    ├── task_description.md  # タスクの詳細説明
+    └── progress.md         # 進捗状況の記録
+```
+
+### タスクログ記録の流れ
+1. タスク開始時に必ずlogディレクトリにタスクログを記録
+2. タスクの詳細説明をtask_description.mdに記載
+3. タスクの進捗状況をprogress.mdに随時記録
+4. タスク完了時に最終進捗を記録
+
 ## workspace/business_tasks/ai_agent_rule.md
 ```
 # ビジネスタスク管理システム

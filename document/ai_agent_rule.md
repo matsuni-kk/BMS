@@ -45,34 +45,29 @@ document/
    - 重要な変更点の明記
    - 互換性情報の記載
 
-## ログ記録ルール
-
 ## log/ - タスクログ管理
 タスクの進捗管理と記録のためのディレクトリ
 
-#### ディレクトリ構造
+### ディレクトリ構造
 ```
-log/
-├── README.md
+document/log/
+├── ai_agent_rule.md
 └── YYYYMMDD/
-    ├── task_description.md
-    └── progress.md
+    ├── task_description.md  # タスクの詳細説明
+    └── progress.md         # 進捗状況の記録
 ```
 
-#### 使用方法
+### 使用方法
 1. 新規タスク開始時：YYYYMMDDフォーマットでフォルダを作成
 2. 各タスクフォルダには以下を含める：
    - task_description.md：タスクの詳細説明
    - progress.md：進捗状況の記録
 
-### ディレクトリ構造
-```
-log/
-├── README.md
-└── YYYYMMDD/
-    ├── task_description.md
-    └── progress.md
-```
+### 重要：タスクフロー
+1. タスク開始時に必ずlogディレクトリにタスクログを記録
+2. タスクの詳細説明をtask_description.mdに記載
+3. タスクの進捗状況をprogress.mdに随時記録
+4. タスク完了時に最終進捗を記録
 
 ## 文書作成ガイドライン
 
