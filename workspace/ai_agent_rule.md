@@ -18,7 +18,9 @@ workspace/log/
 ### タスクログ記録の流れ
 1. タスク開始時に必ずlogディレクトリにタスクログを記録
 2. タスクの詳細説明をtask_description.mdに記載
+   - ログを記録する際は、必ず日時を記載する
 3. タスクの進捗状況をprogress.mdに随時記録
+   - 進捗を記録する際は、必ず日時を記載し、上書きではなく追記する
 4. タスク完了時に最終進捗を記録
 
 ## workspace/business_tasks/ai_agent_rule.md
