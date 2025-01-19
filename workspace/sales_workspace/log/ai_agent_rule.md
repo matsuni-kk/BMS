@@ -1,11 +1,11 @@
 # タスクログ管理
 
-このディレクトリ（log）は、すべてのタスクの実行ログを一元管理するための場所です。
+このディレクトリ（workspace/sales_workspace/log）は、すべてのタスクの実行ログを一元管理するための場所です。
 タスクの種類に関わらず、すべてのログはこのディレクトリに集約して管理されます。
 
 ## ディレクトリ構造
 ```
-log/
+workspace/sales_workspace/log/
 ├── ai_agent_rule.md
 └── YYYYMMDD/
     ├── task_description.md  # タスクの詳細説明
@@ -15,7 +15,7 @@ log/
 ## 使用方法
 
 1. 新しいタスクログを記録する際は、以下の形式でディレクトリを作成：
-   - パス: `log/YYYYMMDD`（例：log/20250116）
+   - パス: `workspace/sales_workspace/log/YYYYMMDD`（例：workspace/sales_workspace/log/20250116）
    - すべてのタスクログはこのディレクトリに集約
 
 2. 各タスクフォルダには以下のファイルを含める：
