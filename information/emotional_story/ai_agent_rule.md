@@ -10,13 +10,18 @@
 
 ## ディレクトリ構造
 ```
-emotional story/
+emotional_story/
 ├── methodology/          # 方法論関連文書
 │   ├── basic/          # 基本概念
 │   └── advanced/       # 上級テクニック
 ├── templates/           # ストーリーテンプレート
 ├── examples/           # 実践例
-└── resources/          # 補助リソース
+├── resources/          # 補助リソース
+├── narrative/          # 物語論
+├── negotiation/        # 交渉術
+├── persuasion/         # 説得術
+├── philosophy/         # 哲学
+└── psychology/         # 心理学
 ```
 
 ## ストーリー構築の基本原則
@@ -139,7 +144,7 @@ emotional story/
 - 既存コンテンツの改善
 - スキル向上のための訓練
 
-最終更新日: 2025/1/16
+最終更新日: 2025/1/20
 
 ## ログ記載ルール
 
