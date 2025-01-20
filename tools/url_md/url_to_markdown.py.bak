@@ -1,0 +1,21 @@
+from langchain_community.document_loaders import WebBaseLoader
+
+def convert_url_to_markdown(url):
+    """
+    指定されたURLのウェブページを読み込み、Documentオブジェクトを返す関数。
+
+    Args:
+        url (str): 読み込むウェブページのURL。
+
+    Returns:
+        Document: ウェブページのコンテンツとメタデータを含むDocumentオブジェクト。
+    """
+    loader = WebBaseLoader(url)
+    document = loader.load()[0]
+    return document
+
+# 使用例
+if __name__ == "__main__":
+    url = "https://ja.wikipedia.org/wiki/%E3%82%B5%E3%83%B3%E3%83%87%E3%83%BC%E3%82%B5%E3%82%A4%E3%83%AC%E3%83%B3%E3%82%B9"  # 変換したいURLを指定
+    document = convert_url_to_markdown(url)
+    print(document.page_content)
