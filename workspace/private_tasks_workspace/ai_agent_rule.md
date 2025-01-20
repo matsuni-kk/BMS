@@ -111,7 +111,24 @@ private_tasks_workspace/
 │   └── project_name/    # プロジェクト別フォルダ
 │       ├── project_detail.md  # プロジェクト詳細
 │       ├── input/      # プロジェクトの入力データ
-│       └── output/     # プロジェクトの成果物
+│       ├── output/     # プロジェクトの成果物
+│       └── archive/    # プロジェクトのアーカイブ
+│           ├── documents/  # ドキュメント類
+│           │   ├── specifications/  # 仕様書
+│           │   ├── reports/         # レポート
+│           │   ├── presentations/   # プレゼン資料
+│           │   ├── manuals/         # マニュアル
+│           │   └── images/          # 画像ファイル（スクリーンショット、図表、写真等）
+│           ├── data/      # データファイル
+│           │   ├── raw/             # 生データ
+│           │   ├── processed/       # 加工済みデータ
+│           │   ├── analysis/        # 分析データ
+│           │   └── backups/         # バックアップ
+│           └── other/     # その他のファイル
+│               ├── templates/       # テンプレート
+│               ├── references/      # 参考資料
+│               ├── tools/           # ツール類
+│               └── misc/            # 雑多なファイル
 ├── playground/          # 人間とAIの協業作業スペース
 └── archive/             # 完了タスクのアーカイブ
 ```
@@ -291,6 +308,13 @@ output/
     - project_detail.md：プロジェクトの詳細情報
     - input/：プロジェクトの入力データ
     - output/：プロジェクトの成果物
+  - アーカイブファイルの命名規則：
+    - 基本形式：プロジェクト名_アーカイブ_種類名_ファイル名
+    - 例：hobby_project_archive_documents_reports_progress_report_20250120.pdf
+  - アーカイブの分類と保管：
+    - documents/：文書関連ファイル（仕様書、報告書、プレゼン資料等）
+    - data/：データファイル（生データ、加工データ、分析結果等）
+    - other/：その他のファイル（テンプレート、参考資料等）
 - playground環境について
   - 人間とAIが協業して一時的にファイルを編集する作業スペース
   - 作業完了後は適切なフォルダ（daily/monthly/projects）に移動
