@@ -1,8 +1,9 @@
-タスクID	タスク名	起票日時	最終更新日時	ステータス	優先度	期限	関連ファイル	進捗率	備考
-BT-001	サンプルタスク1	2025-01-18 10:00	2025-01-18 15:30	進行中	高	2025-01-20	/daily/20250118/task1/task_detail.md, /daily/20250118/task1/output/report.pdf	60%	レビュー待ち
-BT-002	生成AI活用のガバナンス策定検討	2025-01-20 15:27	2025-01-20 15:32	進行中	高	2024-01-17	/daily/20250120/ai_governance/task_detail.md, /daily/20250120/ai_governance/test_cases.md, /daily/20250120/ai_governance/output/task_list.md	10%	要件整理完了、タスクリスト作成完了
-BT-003	生成AI定例MTG要点整理	2025-01-20 15:45	2025-01-20 17:15	完了	中	2025-01-21	/daily/20250120/ai_meeting/minute.md, /daily/20250120/ai_meeting/test_cases.md, /daily/20250120/ai_meeting/output/task_list.md	100%	議事録作成完了、タスクリスト作成完了
-BT-004	生成AI活用キックオフ資料分析	2025-01-20 16:26	2025-01-20 16:26	完了	中	2025-01-20	/daily/20250120/ai_document_analysis/task_detail.md, /daily/20250120/ai_document_analysis/test_cases.md, /daily/20250120/ai_document_analysis/output/presentation_analysis.md	100%	分析レポート作成完了
-BT-005	パイロットケース詳細ヒアリング	2025-01-20 17:15	2025-01-20 17:15	新規	高	2025-01-26	/daily/20250120/ai_meeting/output/task_list.md	0%	文書作成、問い合わせ対応、現場業務の3領域
-BT-006	アーキテクチャ検討会準備	2025-01-20 17:15	2025-01-20 17:15	新規	高	2025-01-22	/daily/20250120/ai_meeting/output/task_list.md	0%	Azure/Bedrock選定に向けた検討
-BT-007	報告資料アップデート	2025-01-20 17:15	2025-01-20 17:15	新規	中	2025-01-24	/daily/20250120/ai_meeting/output/task_list.md	0%	デモ動画追加検討含む
+タスクIDタスク名起票日時最終更新日時ステータス優先度期限関連ファイル進捗率備考
+BT-001サンプルタスク12025-01-18 10:002025-01-18 15:30進行中高2025-01-20/daily/20250118/task1/task_detail.md, /daily/20250118/task1/output/report.pdf60%レビュー待ち
+BT-002生成AI活用のガバナンス策定検討2025-01-20 15:272025-01-20 15:32進行中高2024-01-17/daily/20250120/ai_governance/task_detail.md, /daily/20250120/ai_governance/test_cases.md, /daily/20250120/ai_governance/output/task_list.md10%要件整理完了、タスクリスト作成完了
+BT-003生成AI定例MTG要点整理2025-01-20 15:452025-01-20 17:15完了中2025-01-21/daily/20250120/ai_meeting/minute.md, /daily/20250120/ai_meeting/test_cases.md, /daily/20250120/ai_meeting/output/task_list.md100%議事録作成完了、タスクリスト作成完了
+BT-004生成AI活用キックオフ資料分析2025-01-20 16:262025-01-20 16:26完了中2025-01-20/daily/20250120/ai_document_analysis/task_detail.md, /daily/20250120/ai_document_analysis/test_cases.md, /daily/20250120/ai_document_analysis/output/presentation_analysis.md100%分析レポート作成完了
+BT-005パイロットケース詳細ヒアリング2025-01-20 17:152025-01-20 17:15新規高2025-01-26/daily/20250120/ai_meeting/output/task_list.md0%文書作成、問い合わせ対応、現場業務の3領域
+BT-006アーキテクチャ検討会準備2025-01-20 17:152025-01-20 17:15新規高2025-01-22/daily/20250120/ai_meeting/output/task_list.md0%Azure/Bedrock選定に向けた検討
+BT-007報告資料アップデート2025-01-20 17:152025-01-22 09:14完了中2025-01-24/daily/20250120/ai_meeting/output/task_list.md100%報告資料アップデート完了
+BT-008生成AIのハンズオン資料作成2025-01-21 23:262025-01-22 00:02完了高2025-01-28/daily/20250121/ai_handson/task_detail.md, /daily/20250121/ai_handson/test_cases.md, /daily/20250121/ai_handson/output/amazon_bedrock_handson.md100%ハンズオン資料作成完了
