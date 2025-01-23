@@ -8,6 +8,11 @@ from dataclasses import dataclass
 import traceback
 import sys
 import logging
+from datetime import datetime
+
+# パッケージのパスを追加
+package_path = Path(__file__).parent.parent / 'packages/markitdown'
+sys.path.append(str(package_path))
 
 try:
     from docx import Document
@@ -17,9 +22,10 @@ try:
     from PIL import Image
     import pytesseract
     from bs4 import BeautifulSoup
+    import langchain_community
 except ImportError as e:
     print(f"インポートエラー: {str(e)}")
-    print("pip install -r requirements.txtを実行してください。")
+    print("pip install -r packages/markitdown/requirements.txtを実行してください。")
     raise
 
 # ログファイルの設定
@@ -99,11 +105,17 @@ class MarkItDown:
             result = converter(file_path)
             self._log("変換処理完了")
 
-            # 出力ファイルの保存
-            output_path = file_path.with_suffix('.md')
-            if output_path != file_path:
-                self.save_markdown(result, output_path)
-                print(f"変換完了: {output_path}")
+            # 出力ディレクトリを作成
+            output_dir = Path(__file__).parent / 'output'
+            output_dir.mkdir(parents=True, exist_ok=True)
+            
+            # 出力ファイル名を生成
+            output_filename = file_path.stem + '_' + datetime.now().strftime('%Y%m%d_%H%M%S') + '.md'
+            output_path = output_dir / output_filename
+
+            # 変換結果を保存
+            self.save_markdown(result, output_path)
+            print(f"変換完了: {output_path}")
 
             return result
             

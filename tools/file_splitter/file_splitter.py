@@ -1,3 +1,7 @@
+"""
+File splitting utility module for dividing text files into smaller chunks.
+Part of the tools package collection.
+"""
 import os
 import math
 import argparse
@@ -51,7 +55,10 @@ def split_file(file_path: str, num_splits: int) -> list[str]:
     
     # 分割処理
     splits = []
-    dir_path = os.path.dirname(abs_path)
+    # 出力ディレクトリを作成
+    output_dir = os.path.join(os.path.dirname(__file__), 'output')
+    os.makedirs(output_dir, exist_ok=True)
+    
     base_name, ext = os.path.splitext(os.path.basename(abs_path))
     
     for i in range(num_splits):
@@ -63,8 +70,8 @@ def split_file(file_path: str, num_splits: int) -> list[str]:
         if not split_content:
             break
             
-        # 分割ファイル名生成（元ファイルと同じディレクトリに作成）
-        split_path = os.path.join(dir_path, f"{base_name}_split_{i+1}{ext}")
+        # 分割ファイル名生成（outputディレクトリに作成）
+        split_path = os.path.join(output_dir, f"{base_name}_split_{i+1}{ext}")
         
         # 分割ファイル作成
         with open(split_path, 'w', encoding='utf-8') as f:
