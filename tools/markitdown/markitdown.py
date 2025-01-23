@@ -411,20 +411,59 @@ class MarkItDown:
             metadata={"type": "text"}
         )
 
+    def convert_directory(self, dir_path: Union[str, Path]) -> None:
+        """
+        ディレクトリ内の全ファイルをMarkdown形式に変換します。
+        
+        Args:
+            dir_path: 変換対象ディレクトリのパス
+        """
+        try:
+            dir_path = Path(dir_path).resolve()
+            self._log(f"入力ディレクトリ: {dir_path}")
+            
+            if not dir_path.exists():
+                error_msg = f"ディレクトリが見つかりません: {dir_path}"
+                logger.error(error_msg)
+                raise FileNotFoundError(error_msg)
+                
+            if not dir_path.is_dir():
+                error_msg = f"指定されたパスはディレクトリではありません: {dir_path}"
+                logger.error(error_msg)
+                raise NotADirectoryError(error_msg)
+
+            # ディレクトリ内の全ファイルを処理
+            for file_path in dir_path.rglob('*'):
+                if file_path.is_file() and file_path.suffix.lower() in self.supported_extensions:
+                    try:
+                        self.convert(file_path)
+                    except Exception as e:
+                        logger.error(f"ファイル {file_path} の変換中にエラーが発生: {str(e)}")
+                        continue
+
+        except Exception as e:
+            logger.error(f"ディレクトリ処理エラー: {str(e)}")
+            logger.exception("詳細なエラー情報:")
+            raise
+
 def main():
-    import argparse
-    parser = argparse.ArgumentParser(description='ファイルをMarkdown形式に変換')
-    parser.add_argument('input_file', help='変換対象ファイル')
-    parser.add_argument('-d', '--debug', action='store_true', help='デバッグモードを有効化')
-    args = parser.parse_args()
+    """
+    コマンドライン引数からファイルまたはディレクトリを受け取り、変換を実行
+    """
+    if len(sys.argv) != 2:
+        print("使用方法: python markitdown.py <file_or_directory_path>")
+        sys.exit(1)
+
+    path = Path(sys.argv[1])
+    converter = MarkItDown(debug=True)
 
     try:
-        converter = MarkItDown(debug=args.debug)
-        converter.convert(args.input_file)
+        if path.is_dir():
+            converter.convert_directory(path)
+        else:
+            converter.convert(path)
     except Exception as e:
-        print(f"エラー: {str(e)}", file=sys.stderr)
-        if args.debug:
-            traceback.print_exc()
+        print(f"エラーが発生しました: {str(e)}")
         sys.exit(1)
 
 if __name__ == '__main__':
