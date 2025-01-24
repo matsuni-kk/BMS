@@ -49,7 +49,7 @@ def create_wordcloud(text, output_path, width=800, height=600):
 
 def main():
     if len(sys.argv) < 2:
-        print('使用方法: python generate_wordcloud.py [CSVファイルパス]')
+        print('使用方法: python generate_wordcloud.py [CSVファイルパス] [列名]')
         sys.exit(1)
 
     input_file = sys.argv[1]
@@ -61,18 +61,22 @@ def main():
     # CSVファイルを読み込む
     df = read_csv(input_file)
     
-    # 全ての列のテキストを結合
-    text = ' '.join(df.astype(str).values.flatten())
+    if len(sys.argv) == 3:
+        column_name = sys.argv[2]
+        # 指定された列のテキストを結合
+        text = ' '.join(df[column_name].astype(str).values)
+        output_file = output_dir / f'{Path(input_file).stem}_{column_name}_wordcloud.png'
+    else:
+        # 全ての列のテキストを結合
+        text = ' '.join(df.astype(str).values.flatten())
+        output_file = output_dir / f'{Path(input_file).stem}_wordcloud.png'
     
     # テキストの前処理
     processed_text = tokenize_text(text)
-    
-    # 出力ファイル名を設定（必ずoutputディレクトリ内）
-    output_file = output_dir / f'{Path(input_file).stem}_wordcloud.png'
     
     # ワードクラウド生成
     create_wordcloud(processed_text, str(output_file))
     print(f'ワードクラウドを生成しました: {output_file}')
 
 if __name__ == '__main__':
-    main() 
+    main()
