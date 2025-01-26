@@ -1,0 +1,5 @@
+markdown==3.4.3
+markmap==0.1.6
+selenium==4.11.2
+webdriver_manager==4.0.0
+Pillow==10.0.0 

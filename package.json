@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "markmap-cli": "^0.18.9",
+    "svg-to-img": "^2.0.9"
+  }
+}
