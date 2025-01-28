@@ -1,89 +1,71 @@
 import os
 import sys
-import re
-import json
 import requests
-from bs4 import BeautifulSoup
-from urllib.parse import urlparse, quote_plus
-from datetime import datetime
+import tempfile
 from pathlib import Path
-
-# パッケージのパスを追加
-package_path = Path(__file__).parent.parent / 'packages/url_md'
-sys.path.append(str(package_path))
-
-try:
-    import langchain_community
-except ImportError:
-    print("必要なパッケージがインストールされていません。")
-    print("以下のコマンドを実行してください：")
-    print(f"pip install -r {package_path}/requirements.txt")
-    sys.exit(1)
-
-def extract_title(soup):
-    title_tag = soup.find('title')
-    if title_tag:
-        return title_tag.string.strip()
-    return None
-
-def extract_description(soup):
-    meta_desc = soup.find('meta', attrs={'name': 'description'})
-    if meta_desc:
-        return meta_desc.get('content', '').strip()
-    return None
+from datetime import datetime
+from urllib.parse import urlparse
+from langchain_community.document_loaders import UnstructuredHTMLLoader
 
 def get_domain(url):
+    """URLからドメインを取得する"""
     parsed_uri = urlparse(url)
     return parsed_uri.netloc
 
-def encode_url(url):
-    """URLを正しくエンコードする"""
-    parsed = urlparse(url)
-    path_parts = parsed.path.split('/')
-    encoded_parts = [quote_plus(part, safe='') for part in path_parts if part]
-    encoded_path = '/' + '/'.join(encoded_parts)
-    return f"{parsed.scheme}://{parsed.netloc}{encoded_path}"
-
-def fetch_url_info(url):
+def fetch_url_to_markdown(url):
+    """URLの内容を取得してMarkdown形式に変換する"""
     try:
-        # URLをエンコード
-        encoded_url = encode_url(url)
-        response = requests.get(encoded_url)
-        response.encoding = response.apparent_encoding
+        # ブラウザのように振る舞うヘッダーを設定
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'ja,en-US;q=0.7,en;q=0.3'
+        }
+
+        # ウェブページのHTMLコンテンツを取得
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
-        
-        soup = BeautifulSoup(response.text, 'html.parser')
-        title = extract_title(soup)
-        description = extract_description(soup)
-        domain = get_domain(url)
-        
-        # Markdown形式で情報を整形
-        markdown = []
-        markdown.append(f"# {title if title else 'ページタイトルなし'}\n\n")
-        markdown.append(f"URL: {url}\n")
-        markdown.append(f"ドメイン: {domain}\n")
-        markdown.append(f"取得日時: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-        
-        if description:
-            markdown.append(f"## 説明\n\n{description}\n\n")
+        html_content = response.content.decode('utf-8', 'ignore')
+
+        # 一時ファイルを作成してHTMLを保存
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', suffix='.html', delete=False) as temp_file:
+            temp_file.write(html_content)
+            temp_path = temp_file.name
+
+        try:
+            # UnstructuredHTMLLoaderを使用してHTMLを読み込み
+            loader = UnstructuredHTMLLoader(temp_path)
+            documents = loader.load()
+
+            # Markdownコンテンツを生成
+            markdown_content = []
             
-        # 本文の抽出（主要なコンテンツ領域を探す）
-        main_content = soup.find('main') or soup.find(id='content') or soup.find(class_='content')
-        if main_content:
-            markdown.append("## 本文\n\n")
-            for p in main_content.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
-                text = p.get_text().strip()
-                if text:
-                    if p.name.startswith('h'):
-                        level = int(p.name[1])
-                        markdown.append(f"{'#' * level} {text}\n\n")
-                    else:
-                        markdown.append(f"{text}\n\n")
-        
-        return ''.join(markdown)
-        
+            # メタ情報を追加
+            domain = get_domain(url)
+            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            
+            markdown_content.extend([
+                "# ページコンテンツ\n",
+                f"URL: {url}\n",
+                f"ドメイン: {domain}\n",
+                f"取得日時: {current_time}\n\n",
+                "## 本文\n\n"
+            ])
+
+            # ドキュメントの内容を追加
+            for doc in documents:
+                markdown_content.append(doc.page_content)
+
+            return ''.join(markdown_content)
+
+        finally:
+            # 一時ファイルを削除
+            os.unlink(temp_path)
+
     except requests.RequestException as e:
         return f"# エラー\n\nURLの取得中にエラーが発生しました: {str(e)}\n"
+    except Exception as e:
+        return f"# エラー\n\n予期せぬエラーが発生しました: {str(e)}\n"
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
@@ -91,10 +73,10 @@ if __name__ == '__main__':
         sys.exit(1)
         
     url = sys.argv[1]
-    markdown_content = fetch_url_info(url)
+    markdown_content = fetch_url_to_markdown(url)
     
     # 出力ディレクトリを固定
-    output_dir = Path(__file__).parent / 'output'
+    output_dir = Path("D:/BMS/tools/url_md/output")
     output_dir.mkdir(exist_ok=True)
     
     # 出力ファイル名を生成
