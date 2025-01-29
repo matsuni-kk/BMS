@@ -4,7 +4,7 @@
 
 ## 共通ルール
 - 日本語で応対
-- 「D:\BMS\document」直下にフォルダを作るときは必ずai_agent_ruleファイルを作成
+- 「D:\BMS\document」直下にフォルダを作るときは必ずai_agent_ruleファイルを「D:\BMS\ai_agent_rule_format.md」をフォーマットにして作成
 - 依頼するほとんどのタスクはコーディングとは関係ないことを考慮
 - powershellでは「&&」を使用しない
 - 絶対に生成時に省略行為は行わない
