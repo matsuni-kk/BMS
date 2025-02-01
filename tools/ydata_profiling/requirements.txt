@@ -1,0 +1,14 @@
+# 基本パッケージ
+ydata-profiling>=4.6.4
+pandas>=2.0.0
+
+# Excel対応
+openpyxl>=3.1.5
+
+# Jupyter サポート（オプション）
+jupyterlab>=4.0.0
+ipywidgets>=8.0.0
+
+# 可視化関連
+matplotlib>=3.0.0
+seaborn>=0.12.0
