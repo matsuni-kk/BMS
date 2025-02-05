@@ -1,4 +1,4 @@
-# BMS (Business Management System)
+# work名
 
 このファイルはすべてのディレクトリのai_agent_rule.mdのフォーマットとなるものです。
 
