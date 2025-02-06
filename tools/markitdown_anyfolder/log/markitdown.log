@@ -1,0 +1,7 @@
+2025-02-06 18:19:42,434 - __main__ - DEBUG - 入力ファイル: D:\BMS\ai_agent_rule_format.md
+2025-02-06 18:19:42,438 - __main__ - DEBUG - ファイル拡張子: .md
+2025-02-06 18:19:42,448 - __main__ - DEBUG - 変換処理開始: _convert_markdown
+2025-02-06 18:19:42,459 - __main__ - DEBUG - Markdownファイルの読み込み
+2025-02-06 18:19:42,472 - __main__ - DEBUG - 変換処理完了
+2025-02-06 18:19:42,495 - __main__ - DEBUG - 保存先: D:\BMS\tools\markitdown_anyfolder\output\ai_agent_rule_format_20250206_181942.md
+2025-02-06 18:19:42,555 - __main__ - DEBUG - 保存完了
