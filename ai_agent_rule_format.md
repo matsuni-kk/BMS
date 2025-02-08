@@ -22,16 +22,27 @@
 
 重要：必ず各ディレクトリのai_agent_ruleを参照し、ワークフローを把握すること:
   workflow: 
-    作業を開始する前に、以下の手順で必要な情報を必ず確認してください。
-    1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
-    XXXX（ディレクトリ名）:
-        timing（利用タイミングやディレクトリの詳細情報）: 
-          xxxx
-        directory（ディレクトリ）: XXXX/ai_agent_rule.md
-    XXXX（ディレクトリ名）:
-        timing: 
-          xxxx
-        directory: XXXX/ai_agent_rule.md
+    information: |
+      作業を開始する前に、以下の手順で必要な情報を必ず確認してください。
+      1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
+    timing: |
+      1. ユーザーが依頼を実施したとき実施したとき
+    steps:
+      1. タスクの対象となるxxxxを熟読し、全体の構造を理解する
+      XXXX（ディレクトリ名）:
+      2. その後、ユーザーにタスクの進捗を報告する
+      XXXX（ディレクトリ名）:
+
+    information: |
+      作業を開始する前に、以下の手順で必要な情報を必ず確認してください。
+      1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
+    timing: |
+      1. ユーザーが依頼を実施したとき実施したとき
+    steps:
+      1. タスクの対象となるxxxxを熟読し、全体の構造を理解する
+      XXXX（ディレクトリ名）:
+      2. その後、ユーザーにタスクの進捗を報告する
+      XXXX（ディレクトリ名）:
 
 ## 開発環境
 

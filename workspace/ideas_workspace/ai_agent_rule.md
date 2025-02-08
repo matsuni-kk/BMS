@@ -31,25 +31,24 @@
     1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
 
     created_idea:
-        timing: |
+        information: |
           実装済みアイデアを管理するディレクトリです。
           以下の構造で管理されます：
           - 実装仕様書
           - テスト結果
           - 運用マニュアル
-          - メンテナンス計画
-          
-          利用タイミング：
+          - メンテナンス計画  
+        timing: |
           - アイデア実装完了時
           - テスト結果記録時
           - 文書更新時
         directory: created_idea/ai_agent_rule.md
 
     idea_process:
-        timing: |
+        information: |
           アイデア創出と評価のプロセスを管理するディレクトリです。
           以下のサブディレクトリを含みます：
-          
+        
           /templates/
           - アイデア記録テンプレート
             - タイトル
@@ -74,7 +73,7 @@
         directory: idea_process/ai_agent_rule.md
 
     experiments:
-        timing: |
+        information: |
           実験的プロジェクトを管理するディレクトリです。
           各実験は以下の要素を含みます：
           - 実験計画書
@@ -83,20 +82,22 @@
           - タイムライン
           - 結果分析
           
-          利用タイミング：
+        timing: |
           - 新規実験開始時
           - 実験結果記録時
           - レビュー実施時
         directory: experiments/ai_agent_rule.md
 
     log:
-        timing: |
+        information: |
           作業ログを記録するディレクトリです。
-          以下の情報を記録します：
+        timing: |
+          各処理完了後に以下の情報を記録します：
           - アイデア評価結果
           - 実験進捗状況
           - レビューフィードバック
           - 意思決定履歴
+
         directory: log/ai_agent_rule.md
 
 ## 開発環境

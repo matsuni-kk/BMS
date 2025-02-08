@@ -1,11 +1,11 @@
-違います違います# AI PoC プロジェクトルール
+# AI PoC プロジェクトルール
 
 ## プロジェクト概要
 AI技術のPoCを実施し、その効果検証と実用可能性を評価するプロジェクト
 
 ## ディレクトリ構造
 ```
-ai_poc_project/
+projects/company_ai_promotion/archive/ai_poc_project/
 ├── ai_agent_rule.md      # プロジェクトルール
 ├── project_detail.md     # プロジェクト詳細
 ├── input/               # 入力データ

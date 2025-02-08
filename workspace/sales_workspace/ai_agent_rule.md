@@ -30,62 +30,59 @@
     作業を開始する前に、以下の手順で必要な情報を必ず確認してください。
     1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
 
-    processes:
-        timing: |
+　 workflow:
+        information: |
           営業プロセスを管理するディレクトリです。
           以下のサブディレクトリを含みます：
-          
+        
           /basic/
           - 基本的な営業プロセスガイド
           - 事前準備から成約後のフォロー
           - 各フェーズでの具体的アクション
           - PDCA管理手法
-          
+
           /advanced/
           - 発展的な営業プロセス
           - 複雑な商談管理
           - 大規模案件向けプロセス
-          
-          利用タイミング：
+        timing: |
           - 新規営業活動開始時
           - プロセス改善時
           - 研修実施時
         directory: processes/ai_agent_rule.md
 
     storytelling:
-        timing: |
+        information: |
           ストーリーテリングを管理するディレクトリです。
           以下の要素を含みます：
           - 効果的なストーリー構築方法
           - プレゼンテーションへの展開手法
           - 業界別戦略
           - STAR法による事例紹介
-          - Before/After提示方法
-          
-          利用タイミング：
+          - Before/After提示方法        
+        timing: |
           - 提案資料作成時
           - プレゼン準備時
           - 事例作成時
         directory: storytelling/ai_agent_rule.md
 
     negotiation:
-        timing: |
+        information: |
           商談・交渉関連を管理するディレクトリです。
           以下の内容を含みます：
           - 基本的な交渉スキル
           - 価格交渉テクニック
           - Win-Win関係構築方法
           - 具体的な応答例
-          - 反論処理フレームワーク
-          
-          利用タイミング：
+          - 反論処理フレームワーク     
+        timing: |
           - 商談準備時
           - 価格交渉時
           - 契約交渉時
         directory: negotiation/ai_agent_rule.md
 
     analysis:
-        timing: |
+        information: |
           顧客分析を管理するディレクトリです。
           以下の機能を提供：
           - 基本情報収集手法
@@ -93,41 +90,39 @@
           - 課題・ニーズ分析
           - CRMシステム活用方法
           - データ分析テンプレート
-          
-          利用タイミング：
+        timing: |
           - 新規顧客分析時
           - 定期レビュー時
           - 戦略立案時
         directory: analysis/ai_agent_rule.md
 
     presentation:
-        timing: |
+        information: |
           プレゼンテーション関連を管理するディレクトリです。
           以下の要素をカバー：
           - 効果的な資料作成方法
           - プレゼンテーションスキル
           - オンライン対応テクニック
           - デジタルツール活用法
-          
-          利用タイミング：
+        timing: |
           - 提案資料作成時
           - プレゼン実施前
           - オンライン商談準備時
         directory: presentation/ai_agent_rule.md
 
     follow_up:
-        timing: |
+        information: |
           フォローアップ戦略を管理するディレクトリです。
           以下の内容を含みます：
           - 顧客関係強化方法
           - 定期的なフォロー計画
           - 長期的な関係構築戦略
           - 自動化システムの活用
-          
-          利用タイミング：
-          - 成約後のフォロー時
-          - 定期メンテナンス時
-          - 関係強化施策実施時
+        timing: |
+          成約後のフォロー時
+          定期メンテナンス時
+          関係強化施策実施時
+
         directory: follow_up/ai_agent_rule.md
 
 ## 開発環境

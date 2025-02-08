@@ -31,7 +31,7 @@
     1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
     
     created_story:
-        timing: |
+        information: |
           作成された小説データを管理するディレクトリです。
           各小説はIDで管理され、以下の構造を持ちます：
           /settings/
@@ -44,51 +44,55 @@
           - setting_tests.md: 設定テスト項目
           - setting_test_results.md: テスト結果
         directory: created_story/ai_agent_rule.md
+        timing: |
+          小説を作成するときに、新たに新規に小説を作成するときに実施します。
+        steps:
+        新たに小説を作成するために新規で作成するフォルダを作成するために、既存のディレクトリを確認し、新規にフォルダを作成します。
     
     creation_process:
-        timing: |
+        information: |
           小説創作プロセスのテンプレートを管理するディレクトリです。
           以下のテンプレートを提供します：
-          
-          - chapter_structure_template.md
-            - 章立て構成の基本フォーマット
-            - 各章のタイトル、要約、目的を定義
-            - シーン分割のガイドライン
-          
-          - character_template.md
-            - キャラクターの詳細プロフィール
-            - 性格、外見、背景設定
-            - 人間関係と役割の定義
-          
-          - novel_creation_process.md
-            - 創作プロセス全体の管理
-            - タイムライン設定
-            - マイルストーン管理
-          
-          - plot_template.md
-            - 物語の展開構造
-            - 伏線配置計画
-            - クライマックスの設計
-          
-          - review_template.md
-            - レビュー記録フォーマット
-            - 改善点のトラッキング
-            - フィードバック管理
-          
-          - scene_template.md
-            - シーン単位の構成要素
-            - 場面設定の詳細
-            - 登場人物の動き
-          
-          - world_setting_template.md
+          1. world_setting_template.md
             - 世界観の基本設定
             - 魔法システムの規則
             - 社会構造の定義
+          2. character_template.md
+            - キャラクターの詳細プロフィール
+            - 性格、外見、背景設定
+            - 人間関係と役割の定義
+          3. chapter_structure_template.md
+            - 章立て構成の基本フォーマット
+            - 各章のタイトル、要約、目的を定義
+            - シーン分割のガイドライン
+          4. plot_template.md
+            - 物語の展開構造
+            - 伏線配置計画
+            - クライマックスの設計
+          5. scene_template.md
+            - シーン単位の構成要素
+            - 場面設定の詳細
+            - 登場人物の動き
+          6. novel_creation_process.md
+            - 創作プロセス全体の管理
+            - タイムライン設定
+            - マイルストーン管理
+          7. review_template.md
+            - レビュー記録フォーマット
+            - 改善点のトラッキング
+            - フィードバック管理
         directory: creation_process/ai_agent_rule.md
-    
-    log:
         timing: |
+          新たに新規に小説を作成するときに、初期設定作成として実施します。
+        steps:
+        処理番号順に1から7まで実施し、小説創作の初期設定情報を作成します。
+
+    log:
+        information: |
           作業ログを記録するディレクトリです。
+        timing: |
+          小説創作の各処理実施後に実施します。
+        steps:
           以下の情報を記録します：
           - タスクの実行内容と結果
           - エラーや問題点の記録
@@ -97,9 +101,12 @@
         directory: log/ai_agent_rule.md
     
     prompts:
+        information: |
+          小説作成時に利用するAIプロンプトを管理するディレクトリです。
         timing: |
-          AIプロンプトを管理するディレクトリです。
-          以下のプロンプトを含みます：
+          小説作成時に利用するAIプロンプトをユーザーが指定した場合に参照します。
+        steps:
+          指定された以下区分のプロンプトを参照します。
           - キャラクター生成用プロンプト
           - シーン展開用プロンプト
           - 対話生成用プロンプト

@@ -38,10 +38,10 @@
     1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
 
     past_articles:
-        timing: |
+        information: |
           完成した記事を管理するディレクトリです。
           以下のサブディレクトリを含みます：
-          
+
           /analysis/
           - 考察や分析文書
           - データ分析結果
@@ -109,10 +109,10 @@
         directory: past_articles/ai_agent_rule.md
 
     writing_in_progress:
-        timing: |
+        information: |
           執筆中の記事を管理するディレクトリです。
           各記事フォルダには以下のファイルが含まれます：
-          
+
           要件.md
           - 記事の目的
           - 対象読者

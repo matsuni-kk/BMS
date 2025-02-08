@@ -38,10 +38,12 @@
     1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
 
     business:
-        timing: |
+        information: |
           ビジネス関連の振り返りを管理するディレクトリです。
-          各日付フォルダ（YYYYMMDD）には以下の内容を含むreflection.mdが存在：
-          
+          各日付フォルダ（YYYYMMDD）には以下の内容を含むreflection.mdが作成していきます：
+        timing: |
+          1. ユーザーがビジネス系のダイアリー作成を依頼したときに実施します
+        steps:
           業務振り返り:
           - 重要な意思決定とその根拠
           - プロジェクトの進捗状況
@@ -63,10 +65,12 @@
         directory: business/ai_agent_rule.md
 
     private:
-        timing: |
+        information: |
           プライベート関連の振り返りを管理するディレクトリです。
           各日付フォルダ（YYYYMMDD）には以下の内容を含むreflection.mdが存在：
-          
+        timing: |
+            1. ユーザーがプライベート系のダイアリー作成を依頼したときに実施します
+        steps:
           個人振り返り:
           - 体調・コンディション
           - メンタル面での気づき
