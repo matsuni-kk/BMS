@@ -3,6 +3,7 @@ import os
 import sys
 import requests
 import tempfile
+import re
 from datetime import datetime
 from urllib.parse import urlparse, urljoin
 from langchain_community.document_loaders import UnstructuredHTMLLoader
@@ -72,6 +73,11 @@ def fetch_url_to_markdown(url):
 def extract_related_urls(url, domain):
     """
     指定URLのHTMLから、同一ドメイン内のリンクを抽出する関数
+    
+    ※変更点:
+      従来のaタグによる抽出に加え、
+      scriptタグ内に埋め込まれたJavaScriptのテキストからも
+      正規表現を使用してURLを抽出するようにしています。
     """
     try:
         response = requests.get(url)
@@ -80,11 +86,20 @@ def extract_related_urls(url, domain):
             return []
         soup = BeautifulSoup(response.content, "html.parser")
         links = set()
+        # aタグによるリンク抽出
         for a_tag in soup.find_all("a", href=True):
             href = a_tag["href"]
             abs_url = urljoin(url, href)  # 絶対URLに変換
             if get_domain(abs_url) == domain:
                 links.add(abs_url)
+        # scriptタグ内からの抽出（JavaScript内に埋め込まれたURL）
+        for script in soup.find_all("script"):
+            if script.string:
+                found_urls = re.findall(r"(https?://[^\s'\"<>]+)", script.string)
+                for found_url in found_urls:
+                    abs_url = urljoin(url, found_url)
+                    if get_domain(abs_url) == domain:
+                        links.add(abs_url)
         return list(links)
     except Exception as e:
         print(f"Error extracting links from {url}: {e}")
