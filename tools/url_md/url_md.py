@@ -107,14 +107,15 @@ def crawl_and_collect_markdown_parallel(start_url, max_pages=50):
     入力URLを起点に、同一ドメイン内の関連URLをBFS方式で巡回しながら
     並列処理でMarkdown化する関数
     最大 max_pages 件のページを1つのMarkdown文字列にまとめて返します
+    並列処理は max_workers=20 として実行
     """
     domain = get_domain(start_url)
     visited = set()
     queue = [start_url]
     markdown_results = []
 
-    # グローバルなThreadPoolExecutorを用いてバッチごとに並列処理
-    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+    # グローバルなThreadPoolExecutorを用いてバッチごとに並列処理（max_workers=20）
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
         while queue and len(visited) < max_pages:
             current_batch = []
             # 未訪問のURLをバッチに収集（最大で残り処理可能数分）
@@ -149,6 +150,74 @@ def crawl_and_collect_markdown_parallel(start_url, max_pages=50):
 
     return "\n\n".join(markdown_results)
 
+def crawl_and_collect_markdown_deepsearch(start_url):
+    """
+    DeepSearch機能:
+    - 開始URLから関連URL（レベル1）を最大20件抽出し、
+    - 各レベル1のURLからさらに関連URL（レベル2）を最大10件抽出する
+    並列処理でMarkdown化し、全体を1つのMarkdown文字列にまとめて返します。
+    並列処理は max_workers=20 として実行
+    """
+    domain = get_domain(start_url)
+    visited = set()
+    markdown_results = []
+
+    # レベル0: 開始URLの処理
+    print(f"Processing: {start_url}")
+    md_start = fetch_url_to_markdown(start_url)
+    markdown_results.append(f"\n\n# {start_url}\n\n" + md_start)
+    visited.add(start_url)
+
+    # レベル1: 開始URLから関連URLを抽出（最大20件）
+    level1_urls = extract_related_urls(start_url, domain)
+    level1_urls = list(dict.fromkeys(level1_urls))  # 重複排除
+    if len(level1_urls) > 20:
+        level1_urls = level1_urls[:20]
+
+    # レベル1を並列処理（max_workers=20）
+    results_level1 = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        future_to_url = {executor.submit(process_single_url, url, domain): url for url in level1_urls if url not in visited}
+        for future in concurrent.futures.as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                md, related = future.result()
+            except Exception as e:
+                md = f"# エラー\n\n{url} の処理中にエラーが発生しました: {e}\n"
+                related = []
+            results_level1.append((url, md, related))
+            visited.add(url)
+            print(f"Finished processing: {url}")
+
+    for url, md, _ in results_level1:
+        markdown_results.append(f"\n\n# {url}\n\n" + md)
+
+    # レベル2: 各レベル1の関連URLから抽出（各最大10件）
+    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+        future_to_url = {}
+        for parent_url, _, related in results_level1:
+            # 重複排除＆既に処理済みのURLは除外
+            unique_related = []
+            for rel_url in related:
+                if rel_url not in visited:
+                    unique_related.append(rel_url)
+                    visited.add(rel_url)
+            if len(unique_related) > 10:
+                unique_related = unique_related[:10]
+            for url in unique_related:
+                future = executor.submit(fetch_url_to_markdown, url)
+                future_to_url[future] = url
+        for future in concurrent.futures.as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                md = future.result()
+            except Exception as e:
+                md = f"# エラー\n\n{url} の処理中にエラーが発生しました: {e}\n"
+            markdown_results.append(f"\n\n# {url}\n\n" + md)
+            print(f"Finished processing: {url}")
+
+    return "\n\n".join(markdown_results)
+
 def save_markdown_file(content, output_dir="output"):
     """
     生成したMarkdown文字列を output ディレクトリ直下に
@@ -167,8 +236,8 @@ def save_markdown_file(content, output_dir="output"):
 def main():
     parser = argparse.ArgumentParser(description="URLからMarkdown作成ツール")
     parser.add_argument("--url", type=str, required=True, help="変換対象のURL")
-    parser.add_argument("--mode", type=str, choices=["single", "aggregate"], default="single",
-                        help="抽出モード: 'single'は単一URLのみ、'aggregate'は関連URLも含めた複数ページを並列処理して1つのMarkdownファイルにまとめる")
+    parser.add_argument("--mode", type=str, choices=["single", "aggregate", "deepsearch"], default="single",
+                        help="抽出モード: 'single'は単一URLのみ、'aggregate'は関連URLも含めた複数ページを並列処理、'deepsearch'はさらにレベルを深く探査します")
     args = parser.parse_args()
 
     if args.mode == "single":
@@ -176,7 +245,6 @@ def main():
         md_content = fetch_url_to_markdown(args.url)
         if md_content:
             md_content = f"# {args.url}\n\n" + md_content
-            # シングルモードでも完了メッセージを表示（任意）
             print(f"Finished processing single URL: {args.url}")
             save_markdown_file(md_content)
         else:
@@ -186,6 +254,13 @@ def main():
         aggregated_md = crawl_and_collect_markdown_parallel(args.url, max_pages=50)
         if aggregated_md:
             save_markdown_file(aggregated_md)
+        else:
+            print("Markdown生成に失敗しました。")
+    elif args.mode == "deepsearch":
+        print(f"Processing deepsearch mode for URL: {args.url}")
+        deep_md = crawl_and_collect_markdown_deepsearch(args.url)
+        if deep_md:
+            save_markdown_file(deep_md)
         else:
             print("Markdown生成に失敗しました。")
 
