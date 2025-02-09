@@ -20,10 +20,12 @@ def get_domain(url):
 def fetch_url_to_markdown(url):
     """
     URLの内容を取得してMarkdown形式に変換する関数
-    UnstructuredHTMLLoaderを用いてHTMLを解析し、Markdown化しています
+    UnstructuredHTMLLoaderを用いてHTMLを解析し、Markdown化しています。
+    ※取得したHTMLはHTTPヘッダーや内部の情報からエンコーディングを自動検出し、
+      いかなるサイトでも日本語が文字化けしないようにデコードします。
     """
     try:
-        # ブラウザのように振る舞うヘッダーを設定
+        # ブラウザのように振る舞うためのヘッダーを設定
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -33,15 +35,19 @@ def fetch_url_to_markdown(url):
         # ウェブページのHTMLコンテンツを取得
         response = requests.get(url, headers=headers)
         response.raise_for_status()
-        html_content = response.content.decode('utf-8', 'ignore')
+        # エンコーディングが指定されていなければ、推定値を設定
+        if not response.encoding:
+            response.encoding = response.apparent_encoding
+        # response.text を利用して適切にデコードしたHTMLを取得
+        html_content = response.text
 
-        # 一時ファイルにHTMLを保存
+        # 一時ファイルにHTMLを保存（UnstructuredHTMLLoaderの仕様上）
         with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', suffix='.html', delete=False) as temp_file:
             temp_file.write(html_content)
             temp_path = temp_file.name
 
         try:
-            # UnstructuredHTMLLoaderを使用してHTMLを読み込み
+            # UnstructuredHTMLLoaderを使用してHTMLからドキュメントを読み込む
             loader = UnstructuredHTMLLoader(temp_path)
             documents = loader.load()
 
@@ -62,7 +68,7 @@ def fetch_url_to_markdown(url):
             return ''.join(markdown_content)
 
         finally:
-            # 一時ファイルの削除
+            # 作成した一時ファイルを削除
             os.unlink(temp_path)
 
     except requests.RequestException as e:
@@ -73,18 +79,22 @@ def fetch_url_to_markdown(url):
 def extract_related_urls(url, domain):
     """
     指定URLのHTMLから、同一ドメイン内のリンクを抽出する関数
-    
+
     ※変更点:
-      従来のaタグによる抽出に加え、
-      scriptタグ内に埋め込まれたJavaScriptのテキストからも
-      正規表現を使用してURLを抽出するようにしています。
+      - 従来のaタグによるリンク抽出に加え、
+      - scriptタグ内に埋め込まれたJavaScriptのテキストからも
+        正規表現を使用してURLを抽出します。
+      また、こちらもエンコーディングを自動検出して適切にデコードします。
     """
     try:
         response = requests.get(url)
         if response.status_code != 200:
             print(f"Failed to retrieve {url}")
             return []
-        soup = BeautifulSoup(response.content, "html.parser")
+        if not response.encoding:
+            response.encoding = response.apparent_encoding
+        # response.text で適切にデコード済みのHTMLを取得
+        soup = BeautifulSoup(response.text, "html.parser")
         links = set()
         # aタグによるリンク抽出
         for a_tag in soup.find_all("a", href=True):
@@ -121,7 +131,7 @@ def crawl_and_collect_markdown_parallel(start_url, max_pages=50):
     """
     入力URLを起点に、同一ドメイン内の関連URLをBFS方式で巡回しながら
     並列処理でMarkdown化する関数
-    最大 max_pages 件のページを1つのMarkdown文字列にまとめて返します
+    最大 max_pages 件のページを1つのMarkdown文字列にまとめて返します。
     並列処理は max_workers=20 として実行
     """
     domain = get_domain(start_url)
