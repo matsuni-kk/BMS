@@ -23,6 +23,7 @@ def fetch_url_to_markdown(url):
     UnstructuredHTMLLoaderを用いてHTMLを解析し、Markdown化しています。
     ※取得したHTMLはHTTPヘッダーや内部の情報からエンコーディングを自動検出し、
       いかなるサイトでも日本語が文字化けしないようにデコードします。
+    なお、対象のURLのドメインが日本のサイト（.jp）であれば、強制的に shift_jis を使用します。
     """
     try:
         # ブラウザのように振る舞うためのヘッダーを設定
@@ -35,8 +36,11 @@ def fetch_url_to_markdown(url):
         # ウェブページのHTMLコンテンツを取得
         response = requests.get(url, headers=headers)
         response.raise_for_status()
-        # エンコーディングが指定されていなければ、推定値を設定
-        if not response.encoding:
+        # ドメインが日本のサイトか判定し、shift_jisでエンコーディング
+        current_domain = get_domain(url)
+        if current_domain.endswith('.jp'):
+            response.encoding = 'shift_jis'
+        elif not response.encoding:
             response.encoding = response.apparent_encoding
         # response.text を利用して適切にデコードしたHTMLを取得
         html_content = response.text
@@ -52,7 +56,7 @@ def fetch_url_to_markdown(url):
             documents = loader.load()
 
             # Markdownコンテンツを生成（ヘッダー情報を先頭に追加）
-            domain = get_domain(url)
+            domain = current_domain
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             markdown_content = [
                 "# ページコンテンツ\n",
@@ -83,15 +87,21 @@ def extract_related_urls(url, domain):
     ※変更点:
       - 従来のaタグによるリンク抽出に加え、
       - scriptタグ内に埋め込まれたJavaScriptのテキストからも
-        正規表現を使用してURLを抽出します。
+        正規表現を使用してURLを抽出するほか、
+      - scriptタグおよびiframeタグにおけるsrc属性からもURLを抽出します。
       また、こちらもエンコーディングを自動検出して適切にデコードします。
+      さらに、対象のURLのドメインが日本のサイト（.jp）であれば、shift_jis を使用します。
     """
     try:
         response = requests.get(url)
         if response.status_code != 200:
             print(f"Failed to retrieve {url}")
             return []
-        if not response.encoding:
+        # ドメインが日本のサイトか判定
+        current_domain = get_domain(url)
+        if current_domain.endswith('.jp'):
+            response.encoding = 'shift_jis'
+        elif not response.encoding:
             response.encoding = response.apparent_encoding
         # response.text で適切にデコード済みのHTMLを取得
         soup = BeautifulSoup(response.text, "html.parser")
@@ -102,14 +112,27 @@ def extract_related_urls(url, domain):
             abs_url = urljoin(url, href)  # 絶対URLに変換
             if get_domain(abs_url) == domain:
                 links.add(abs_url)
-        # scriptタグ内からの抽出（JavaScript内に埋め込まれたURL）
+        # scriptタグからのリンク抽出（src属性および内部JavaScriptから）
         for script in soup.find_all("script"):
+            # src属性からの抽出
+            if script.has_attr("src"):
+                src_url = script.get("src")
+                abs_url = urljoin(url, src_url)
+                if get_domain(abs_url) == domain:
+                    links.add(abs_url)
+            # 内部JavaScriptのテキストからの抽出
             if script.string:
                 found_urls = re.findall(r"(https?://[^\s'\"<>]+)", script.string)
                 for found_url in found_urls:
                     abs_url = urljoin(url, found_url)
                     if get_domain(abs_url) == domain:
                         links.add(abs_url)
+        # iframeタグのsrc属性からの抽出
+        for iframe in soup.find_all("iframe", src=True):
+            src_url = iframe.get("src")
+            abs_url = urljoin(url, src_url)
+            if get_domain(abs_url) == domain:
+                links.add(abs_url)
         return list(links)
     except Exception as e:
         print(f"Error extracting links from {url}: {e}")
