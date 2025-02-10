@@ -13,7 +13,7 @@
 - すべてのタスク実行時にlog/ai_agent_ruleに従って作業ログを記録する
 
 ## テスト駆動処理
-- 必ずタスクはテストドリブンで処理を行う
+- 実際に執筆成果の確認時はテストドリブンで処理を行う
 - タスクに合わせた詳細なテスト項目を事前に作成
   - 形式要件の確認
     - Markdown形式の適切性
@@ -30,23 +30,89 @@
 - テスト用に別途ファイルを作成
 - テスト粒度は細かく設定し、クリアするまで自動で反復
 
+## ディレクトリ詳細
+
+workspace/note_workspace/
+├── ai_agent_rule.md
+├── log/
+│   └── ai_agent_rule.md
+├── past_articles/
+│   ├── analysis/
+│   │   ├── README.md
+│   ├── blog_posts/
+│   │   ├── README.md
+│   ├── book_reviews/
+│   │   ├── README.md
+│   ├── case_studies/
+│   │   ├── README.md
+│   ├── essays/
+│   │   ├── README.md
+│   ├── idea_development/
+│   │   ├── README.md
+│   ├── knowledge_base/
+│   │   ├── README.md
+│   ├── learning_records/
+│   │   ├── README.md
+│   ├── movie_reviews/
+│   │   ├── README.md
+│   ├── project_management/
+│   │   ├── README.md
+│   ├── research_notes/
+│   │   ├── README.md
+│   └── technical_docs/
+│   │   └── README.md
+├── prompts/
+│   └── ai_agent_rule.md
+└── writing_in_progress/
+    └── 【記事タイトル】/  
+        ├── draft/       
+        │   └── [下書きファイル].md (例: draft.md)
+        ├── idea/        
+        │   └── [アイデアファイル].md (例: idea.md)
+        ├── memo/        
+        │   └── [メモファイル].md (例: memo.md)
+        ├── 要件.md       
+        └── 文章.md       
+
 ## ワークフロー
 
 重要：必ず各ディレクトリのai_agent_ruleを参照し、ワークフローを把握すること:
   workflow: |
     作業を開始する前に、以下の手順で必要な情報を必ず確認してください。
     1. タスクの対象となるworkspaceのai_agent_ruleを熟読し、全体の構造を理解する
+    writing_in_progress：
+      information: |
+        アイデアやメモを保管したりまとめたりします。
+      timing: |
+        利用タイミング：
+        - 最初に起案する時
+        - アイデア作成時
+        - メモ作成時
+        - まとめ作成時
+      action: |
+        - writing_in_progressに対象タイトルフォルダがない場合はフォルダを作成する。
+        - 作成したタイトルフォルダにdraft、idea、memoフォルダがない場合はフォルダを作成する。
+        - フォルダを作成するときは必ずai_agent_ruleを作成する。
+      directory: writing_in_progress/ai_agent_rule.md
+
 
     past_articles:
         information: |
           完成した記事を管理するディレクトリです。
           以下のサブディレクトリを含みます：
 
+        timing: |
+          利用タイミング：
+          - 記事完成時
+          - 文書分類時
+          - アーカイブ作成時
+
+        directory: |
           /analysis/
           - 考察や分析文書
           - データ分析結果
           - 市場調査レポート
-          
+
           /blog_posts/
           - ブログ記事
           - Web公開用コンテンツ
@@ -107,31 +173,6 @@
           - 文書分類時
           - アーカイブ作成時
         directory: past_articles/ai_agent_rule.md
-
-    writing_in_progress:
-        information: |
-          執筆中の記事を管理するディレクトリです。
-          各記事フォルダには以下のファイルが含まれます：
-
-          要件.md
-          - 記事の目的
-          - 対象読者
-          - 主要なポイント
-          - 構成案
-          - 参考資料
-          - 完成基準
-          
-          文章.md
-          - アウトライン
-          - 本文内容
-          - 推敲結果
-          - レビュー記録
-          
-          利用タイミング：
-          - 新規記事作成時
-          - 執筆作業中
-          - レビュー時
-        directory: writing_in_progress/ai_agent_rule.md
 
 ## 開発環境
 
