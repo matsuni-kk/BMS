@@ -7,26 +7,36 @@ from vosk import Model, KaldiRecognizer
 import os
 import numpy as np
 
-# プロジェクトのルートディレクトリが vosk フォルダである場合、
-# 出力はその直下の output フォルダに作成されます。
-# ※現在の設定では作業ディレクトリがすでに vosk フォルダ内にある場合、
-#    VOSK_DIR = "." とすることで vosk\output\yyyymmdd となります。
-VOSK_DIR = "."
+def get_script_dir():
+    """
+    スクリプトファイルのディレクトリを動的に取得する関数
+    ※PyInstaller等で実行している場合は sys.executable を利用
+    """
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(sys.executable)
+    else:
+        return os.path.dirname(os.path.abspath(__file__))
+
+# スクリプトが配置されているディレクトリを取得
+SCRIPT_DIR = get_script_dir()
+
+# モデルディレクトリの指定
+# 必要なモデル群はこのスクリプトと同じディレクトリ（例：D:\vosk）に配置してください
+MODEL_PATH = SCRIPT_DIR
+
+# 出力ルートディレクトリの指定 (スクリプトの配置ディレクトリを基準)
+VOSK_DIR = SCRIPT_DIR
 current_date = datetime.now().strftime("%Y%m%d")
 OUTPUT_DIR = os.path.join(VOSK_DIR, "output", current_date)
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
-
-# モデルディレクトリの指定
-# カレントディレクトリのモデルを使用
-MODEL_PATH = os.path.abspath(".")
 
 # モデルのロード
 try:
     model = Model(MODEL_PATH)
 except Exception as e:
     print(f"モデルが見つかりません: {e}")
-    print("小型モデルを https://alphacephei.com/vosk/models からダウンロードし、解凍して 'vosk' フォルダに配置してください。")
+    print("小型モデルを https://alphacephei.com/vosk/models からダウンロードし、解凍してこのフォルダに配置してください。")
     sys.exit(1)
 
 # 音声データをキューで管理
@@ -57,7 +67,7 @@ def audio_callback(indata, frames, time, status):
     """音声データをキューに追加"""
     if status:
         print(f"ステータス: {status}", file=sys.stderr)
-    # ステレオをモノラルにダウンミックス
+    # ステレオの場合はモノラルにダウンミックス
     if len(indata.shape) > 1 and indata.shape[1] > 1:
         mono_data = np.mean(indata, axis=1)
     else:
