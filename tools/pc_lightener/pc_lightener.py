@@ -5,7 +5,7 @@
 【PC 軽量化・不要ファイル削除・キャッシュクリア・ディスククリーンアップツール】
 注意:
     このツールは以下の機能を実行し、PC のリソース解放やディスク容量の拡大、パフォーマンス向上を目的としています。
-      1. 不要なプロセスの強制終了（メモリ使用量が一定以上のプロセス、ただし重要プロセス（chrome、cursor、vscode など）は除外）
+      1. 不要なプロセスの強制終了（メモリ使用量が一定以上のプロセス、ただし重要プロセス（chrome、cursor、vscode などおよびプログラミング関連パッケージは除外））
       2. ユーザーTEMPファイルおよびシステムTEMPファイルの削除
       3. Windows更新ファイルの削除
       4. Prefetch ファイルの削除
@@ -14,10 +14,10 @@
       7. Windowsエラーレポート (WER) の削除
       8. IE/Edge のキャッシュ（INetCache）の削除
       9. Windowsディスククリーンアップツール（cleanmgr）の実行 ※「cleanmgr /sageset:1」で事前に設定が必要
-     10. コンポーネントストアのクリーンアップ ※chrome、cursor、vscode 系以外を対象
-     11. ログファイルの削除 ※chrome、cursor、vscode 系以外を対象
-     12. 不要なバックアップファイルの整理 ※chrome、cursor、vscode 系以外を対象（.bak、.old、.backup など）
-     13. その他の一時ファイルやキャッシュの削除 ※chrome、cursor、vscode 系以外を対象
+     10. コンポーネントストアのクリーンアップ ※chrome、cursor、vscode 系およびプログラミング関連パッケージ以外を対象
+     11. ログファイルの削除 ※chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外
+     12. 不要なバックアップファイルの整理 ※chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外（.bak、.old、.backup など）
+     13. その他の一時ファイルやキャッシュの削除 ※chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外
 
     ※各処理は管理者権限での実行が必須です。実行前に十分な検証およびバックアップを取得し、自己責任でご利用ください。
 """
@@ -45,6 +45,15 @@ CRITICAL_PROCESSES = [
     "cursor",         # Cursor 系（除外対象）
     "cursor.exe",
     "powershell.exe", # PowerShell（除外対象）
+    # --- 追加: プログラミング関連プロセスを除外対象に ---
+    "python.exe",
+    "python",
+    "pip.exe",
+    "pip",
+    "node.exe",
+    "node",
+    "npm",
+    "npm.exe",
 ]
 
 # プロセス強制終了の基準となるメモリ使用量の閾値（MB）
@@ -272,7 +281,7 @@ def run_disk_cleanup():
 def clean_component_store():
     """
     コンポーネントストアのクリーンアップを実行します。
-    ※ chrome、cursor、vscode 系以外を対象としています。
+    ※ chrome、cursor、vscode 系およびプログラミング関連パッケージ以外を対象としています。
     """
     print("---- コンポーネントストアのクリーンアップ開始 ----")
     try:
@@ -284,12 +293,12 @@ def clean_component_store():
 def clean_log_files():
     """
     ログファイルの削除を実行します。
-    ※ chrome、cursor、vscode 系を含むパスは対象外とします。
+    ※ chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外とします。
     対象ディレクトリ: %WINDIR%\Logs, %WINDIR%\System32\LogFiles
     """
     windir = os.environ.get("WINDIR", "C:\\Windows")
     log_dirs = [os.path.join(windir, "Logs"), os.path.join(windir, "System32", "LogFiles")]
-    excluded_keywords = ["chrome", "cursor", "vscode"]
+    excluded_keywords = ["chrome", "cursor", "vscode", "python", "pip", "node", "npm"]
     print("---- ログファイルの削除開始 ----")
     for log_dir in log_dirs:
         if not os.path.exists(log_dir):
@@ -310,13 +319,13 @@ def clean_log_files():
 def clean_backup_files():
     """
     不要なバックアップファイル（.bak, .old, .backup）の整理を実行します。
-    ※ chrome、cursor、vscode 系を含むパスは対象外とします。
+    ※ chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外とします。
     """
     user_profile = os.environ.get("USERPROFILE")
     if not user_profile:
         print("USERPROFILE が見つかりません。")
         return
-    excluded_keywords = ["chrome", "cursor", "vscode"]
+    excluded_keywords = ["chrome", "cursor", "vscode", "python", "pip", "node", "npm"]
     backup_extensions = [".bak", ".old", ".backup"]
     print("---- 不要なバックアップファイルの整理開始 ----")
     for root, dirs, files in os.walk(user_profile):
@@ -335,14 +344,14 @@ def clean_backup_files():
 def clean_misc_cache_files():
     """
     その他の一時ファイルやキャッシュの削除を実行します。
-    ※ chrome、cursor、vscode 系を含むパスは対象外とします。
+    ※ chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外とします。
     対象は %LOCALAPPDATA% 内の "Cache" を名前に含むディレクトリです。
     """
     local_appdata = os.environ.get("LOCALAPPDATA")
     if not local_appdata:
         print("LOCALAPPDATA が見つかりません。")
         return
-    excluded_keywords = ["chrome", "cursor", "vscode"]
+    excluded_keywords = ["chrome", "cursor", "vscode", "python", "pip", "node", "npm"]
     print("---- その他の一時ファイルやキャッシュの削除開始 ----")
     for root, dirs, files in os.walk(local_appdata):
         for d in dirs:
