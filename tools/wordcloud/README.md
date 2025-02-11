@@ -1,61 +1,69 @@
-# ワードクラウド生成ツール
+# Word Cloud Generator
 
-ExcelファイルやCSVファイルから日本語テキストを読み込み、ワードクラウドを生成するツールです。
+## 概要
+テキストデータからワードクラウドを生成するツールです。日本語テキストに対応しており、形態素解析による名詞抽出を行います。特にCSVファイルの特定列からのワードクラウド生成に適しています。
 
 ## 機能
+- CSVファイルからのテキスト読み込み
+- 日本語テキストの形態素解析
+- 名詞の抽出と頻度分析
+- カスタマイズ可能なワードクラウド生成
+  - フォントサイズ調整（20-100px）
+  - 横書き優先レイアウト
+  - 白背景
+  - 日本語フォント対応
 
-- Excel (.xlsx, .xls) およびCSVファイルの読み込み
-- 日本語テキストの形態素解析（名詞の抽出）
-- カスタマイズ可能なワードクラウドの生成
+## 必要要件
+- Python 3.x
+- pandas
+- janome
+- wordcloud
+- matplotlib
+- PIL (Pillow)
 
-## セットアップ
-
-1. 必要なパッケージをダウンロードします：
-
+## インストール方法
+必要なパッケージをインストール：
 ```bash
-python download_packages.py
+pip install pandas janome wordcloud matplotlib pillow
 ```
-
-このコマンドは必要なパッケージを`tools/packages`ディレクトリにダウンロードします。
-インターネット接続が必要ですが、一度ダウンロードすれば再度実行する必要はありません。
 
 ## 使用方法
-
-基本的な使用方法：
-
+### 基本的な使用方法
 ```bash
-python wordcloud.py input.xlsx --column テキスト --output wordcloud.png
+python generate_wordcloud.py <csvファイルパス>
 ```
 
-### オプション
-
-- `input_file`: 入力ファイルのパス（必須、.xlsx/.xls/.csv）
-- `--column`: テキストデータが含まれる列名（デフォルト: 'text'）
-- `--output`: 出力画像のパス（デフォルト: 'wordcloud.png'）
-- `--width`: 画像の幅（デフォルト: 800）
-- `--height`: 画像の高さ（デフォルト: 600）
-- `--font`: カスタムフォントファイルのパス（デフォルト: msgothic.ttc）
-
-### 使用例
-
-1. Excelファイルから特定の列を使用：
+### 特定の列を指定して実行
 ```bash
-python wordcloud.py data.xlsx --column コメント --output result.png
+python generate_wordcloud.py <csvファイルパス> <列名>
 ```
 
-2. CSVファイルを使用：
-```bash
-python wordcloud.py data.csv --column text --width 1000 --height 800
-```
+## 入力ファイル
+- CSVファイル（UTF-8またはShift-JISエンコーディング）
+- 自動的にエンコーディングを検出
 
-3. カスタムフォントを使用：
-```bash
-python wordcloud.py data.xlsx --font "C:/Windows/Fonts/yugothic.ttf"
-```
+## 出力
+- ワードクラウド画像がoutputディレクトリに保存されます
+- ファイル名形式：
+  - 全列使用時：`{元ファイル名}_wordcloud.png`
+  - 特定列指定時：`{元ファイル名}_{列名}_wordcloud.png`
+
+## サンプルデータ
+`samples`ディレクトリに以下のサンプルファイルが含まれています：
+- customer_survey.csv：顧客アンケートのサンプルデータ
+- sample_survey.csv：一般的なアンケートのサンプルデータ
+
+## ワードクラウド設定
+- 画像サイズ：800×600ピクセル
+- 背景色：白
+- 最小フォントサイズ：20px
+- 最大フォントサイズ：100px
+- フォント：msgothic.ttc（日本語対応）
+- 横書き優先（prefer_horizontal=1.0）
 
 ## 注意事項
-
-- 入力ファイルには必ず指定した列名が存在する必要があります
-- テキストデータは日本語に対応しています
-- デフォルトでは名詞のみを抽出してワードクラウドを生成します
-- 初回実行時は`download_packages.py`を実行してパッケージをダウンロードする必要があります 
+- 大規模なテキストデータを処理する場合はメモリ使用量に注意
+- 日本語フォントはシステムにインストールされている必要があります
+- 形態素解析は名詞のみを対象としています
+- 数値は除外されます
+- 処理時間はテキストのサイズに依存します

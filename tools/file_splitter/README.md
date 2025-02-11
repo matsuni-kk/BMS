@@ -1,81 +1,62 @@
 # File Splitter
 
-テキストファイルを指定した分割数で文字数単位に分割するツール
+## 概要
+テキストファイルを指定した数に分割するツールです。文字数単位での分割を行い、分割されたファイルは自動的にoutputディレクトリに保存されます。
 
 ## 機能
+- テキストファイルを指定した数に分割
+- 文字数単位での均等分割
+- UTF-8エンコーディング対応
+- 相対パス・絶対パスの両方に対応
+- 自動的なoutputディレクトリ作成
+- 元のファイル拡張子の維持
 
-- mdやtxtファイルを指定した分割数で文字数単位に分割
-- 分割ファイルは元ファイルと同じディレクトリに生成
-- 自動的に文字数を計算して均等に分割
-- 日本語文字を含むUTF-8エンコードのファイルに対応
-- 相対パス・絶対パス両方に対応
-- パスの自動正規化機能
+## 必要要件
+- Python 3.x
 
 ## 使用方法
-
+### コマンドライン引数
 ```bash
-python file_splitter.py ファイルパス 分割数
+python file_splitter.py <file_path> <num_splits>
+
+# 例：test.txtを3分割する場合
+python file_splitter.py test.txt 3
 ```
 
-### パス指定について
-
-以下のいずれの形式でもファイルを指定可能：
-
-1. 絶対パス
-```bash
-python file_splitter.py C:/Documents/example.txt 5
-```
-
-2. 相対パス（実行時のカレントディレクトリからの相対パス）
-```bash
-# 同じディレクトリ内のファイル
-python file_splitter.py example.txt 5
-
-# サブディレクトリ内のファイル
-python file_splitter.py docs/example.txt 5
-
-# 親ディレクトリのファイル
-python file_splitter.py ../example.txt 5
-```
-
-### 出力ファイル
-
-- 分割ファイルは元のファイルと同じディレクトリに生成されます
-- ファイル名形式：`{元ファイル名}_split_{番号}{拡張子}`
-- 例）`example.txt`を分割した場合：
-  - example_split_1.txt
-  - example_split_2.txt
-  - example_split_3.txt
-  （分割数に応じて続く）
-
-## エラー処理
-
-- 存在しないファイルを指定した場合
-- 1未満の分割数を指定した場合
-- ファイルパスが無効な場合
-
-## プログラムでの利用
-
+### プログラムでの利用
 ```python
 from file_splitter import split_file
 
-# 関数の使用例
-split_files = split_file("path/to/file.txt", 5)
-print(f"生成されたファイル: {split_files}")
+# ファイルを分割して、分割ファイルのパスのリストを取得
+split_files = split_file("path/to/file.txt", 3)
 ```
 
-## 開発者向け情報
+## パラメータ
+- `file_path`: 分割対象のファイルパス（相対パスまたは絶対パス）
+- `num_splits`: 分割数（1以上の整数）
 
-### テスト実行
+## 出力
+- 分割されたファイルは`output`ディレクトリに保存
+- ファイル名形式：`{元のファイル名}_split_{番号}{元の拡張子}`
+- 例：`document_split_1.txt`, `document_split_2.txt`, ...
 
-```bash
-pytest test_file_splitter.py -v
+## 戻り値
+分割されたファイルのパスのリストを返します：
+```python
+[
+    "output/document_split_1.txt",
+    "output/document_split_2.txt",
+    "output/document_split_3.txt"
+]
 ```
 
-### テストケース
+## 例外処理
+- `FileNotFoundError`: ファイルが存在しない場合
+- `ValueError`: 分割数が1未満の場合
+- 空の分割は作成されません
 
-- 基本的な分割機能のテスト（均等分割）
-- 不均等分割のテスト
-- エラーケースのテスト
-- パス処理のテスト（相対パス・絶対パス）
-- 異なるディレクトリからの実行テスト
+## 注意事項
+- 入力ファイルはUTF-8でエンコードされている必要があります
+- 分割サイズは文字数単位で計算されます
+- メモリ使用量は入力ファイルのサイズに依存します
+- 非常に大きなファイルを処理する場合はメモリ使用量に注意してください

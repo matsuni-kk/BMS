@@ -1,45 +1,81 @@
-# Markitdown
-
-URLからMarkdownファイルを作成するツール
+# Markitdown Anyfolder
 
 ## 概要
+指定したフォルダ内のあらゆるファイル（DOCX、XLSX、PPTX、PDF、画像、HTML等）をMarkdown形式に変換し、1つのMarkdownファイルにまとめるツールです。
 
-このツールは、指定されたURLのウェブページをMarkdown形式に変換します。LangChainのToMarkdownLoaderを使用しています。
+## 機能
+- フォルダ内の全ファイルをMarkdown形式に一括変換
+- サブフォルダ内のファイルも再帰的に処理
+- 以下のファイル形式に対応：
+  - Word文書（.docx）
+  - Excelファイル（.xlsx）
+  - PowerPointファイル（.pptx）
+  - PDFファイル
+  - 画像ファイル（.jpg, .jpeg, .png, .gif）
+  - HTMLファイル
+  - CSVファイル
+  - JSONファイル
+  - XMLファイル
+  - Markdownファイル
+  - テキストファイル
+- 変換結果を1つのMarkdownファイルに統合
+- 各ファイルのメタデータ保持
 
-## インストール
+## 必要要件
+- Python 3.x
+- python-docx
+- openpyxl
+- python-pptx
+- PyPDF2
+- Pillow
+- pytesseract
+- beautifulsoup4
+- langchain-community
 
-1. 必要なライブラリをインストールします。
-
-   ```bash
-   pip install -r requirements.txt
-   ```
+## インストール方法
+```bash
+pip install -r packages/markitdown/requirements.txt
+```
 
 ## 使用方法
+### 基本的な使用方法
+```bash
+python markitdown_anyfolder.py <directory_path>
+```
 
-1. `markitdown.py` を実行します。
+### テストモードの実行
+```bash
+python markitdown_anyfolder.py test
+```
 
-   ```bash
-   python markitdown.py
-   ```
+### 単一ファイルの変換
+```bash
+python markitdown_anyfolder.py <file_path>
+```
 
-2. プロンプトが表示されたら、Markdownに変換したいウェブページのURLを入力します。
+## 出力
+- 変換結果は`output`フォルダに保存されます
+- ファイル名は`combined_YYYYMMDD_HHMMSS.md`形式
+- 各ファイルの変換結果は見出し（##）で区切られます
+- ファイルパスと変換日時が記録されます
 
-   ```
-   Enter the URL:
-   ```
+## メタデータ
+各ファイル形式に応じて以下のメタデータが保持されます：
+- Word文書：タイトル
+- Excelファイル：シート名一覧
+- PowerPoint：スライド数
+- PDF：ページ数
+- 画像：フォーマット、サイズ、モード、EXIFデータ
+- HTML：タイトル、エンコーディング
+- JSON：タイプ情報
+- XML：ルートタグ
 
-3. 変換されたMarkdownが標準出力に出力されます。
+## ログ
+- ログファイルは`log/markitdown.log`に保存されます
+- デバッグ情報や変換エラーの詳細が記録されます
 
-## テスト
-
-1. テストを実行するには、以下のコマンドを実行します。
-
-   ```bash
-   pytest
-   ```
-
-## 仕様
-
--   LangChainのToMarkdownLoaderを使用
--   非同期処理
--   URLはユーザーが入力
+## 注意事項
+- 大量のファイルを処理する場合はメモリ使用量に注意してください
+- 画像のOCRには`pytesseract`が必要です
+- PDFの変換はテキストレイヤーがある場合のみ正常に機能します
+- 一部のファイル形式では文字化けが発生する可能性があります

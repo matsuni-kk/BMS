@@ -6,7 +6,7 @@ import tempfile
 import re
 from datetime import datetime
 from urllib.parse import urlparse, urljoin
-from langchain_community.document_loaders import UnstructuredHTMLLoader
+from langchain_community.document_loaders import UnstructuredHTMLLoader, UnstructuredPDFLoader
 from bs4 import BeautifulSoup
 import concurrent.futures
 
@@ -20,60 +20,84 @@ def get_domain(url):
 def fetch_url_to_markdown(url):
     """
     URLの内容を取得してMarkdown形式に変換する関数
-    UnstructuredHTMLLoaderを用いてHTMLを解析し、Markdown化しています。
-    ※取得したHTMLはHTTPヘッダーや内部の情報からエンコーディングを自動検出し、
-      いかなるサイトでも日本語が文字化けしないようにデコードします。
-    なお、対象のURLのドメインが日本のサイト（.jp）であれば、強制的に shift_jis を使用します。
+
+    ・URLがPDFの場合:
+      UnstructuredPDFLoader（mode="paged", languages=["ja"]）を使用してPDFからドキュメントを読み込みます。
+    ・URLがPDF以外の場合:
+      UnstructuredHTMLLoaderを使用してHTMLを解析しMarkdown化します。
+
+    ※取得したコンテンツはHTTPヘッダーや内部情報からエンコーディングを自動検出し、適切にデコードします。
+      また、対象のURLのドメインが日本のサイト（.jp）の場合は、強制的にshift_jisを使用します。
     """
     try:
-        # ブラウザのように振る舞うためのヘッダーを設定
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'ja,en-US;q=0.7,en;q=0.3'
-        }
+        if url.lower().endswith('.pdf'):
+            # PDFの場合
+            response = requests.get(url)
+            response.raise_for_status()
+            pdf_content = response.content
+            # 一時ファイルにPDFを保存（バイナリモード）
+            with tempfile.NamedTemporaryFile(mode='wb', suffix='.pdf', delete=False) as temp_file:
+                temp_file.write(pdf_content)
+                temp_path = temp_file.name
 
-        # ウェブページのHTMLコンテンツを取得
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        # ドメインが日本のサイトか判定し、shift_jisでエンコーディング
-        current_domain = get_domain(url)
-        if current_domain.endswith('.jp'):
-            response.encoding = 'shift_jis'
-        elif not response.encoding:
-            response.encoding = response.apparent_encoding
-        # response.text を利用して適切にデコードしたHTMLを取得
-        html_content = response.text
+            try:
+                # UnstructuredPDFLoaderを使用してPDFからドキュメントを読み込む（ページ単位・日本語対応）
+                loader = UnstructuredPDFLoader(temp_path, mode="paged", languages=["ja"])
+                documents = loader.load()
 
-        # 一時ファイルにHTMLを保存（UnstructuredHTMLLoaderの仕様上）
-        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', suffix='.html', delete=False) as temp_file:
-            temp_file.write(html_content)
-            temp_path = temp_file.name
+                domain = get_domain(url)
+                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                markdown_content = [
+                    "# ページコンテンツ\n",
+                    f"URL: {url}\n",
+                    f"ドメイン: {domain}\n",
+                    f"取得日時: {current_time}\n\n",
+                    "## 本文\n\n"
+                ]
+                for doc in documents:
+                    markdown_content.append(doc.page_content)
+                return ''.join(markdown_content)
+            finally:
+                os.unlink(temp_path)
+        else:
+            # HTMLの場合
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Accept-Language': 'ja,en-US;q=0.7,en;q=0.3'
+            }
+            response = requests.get(url, headers=headers)
+            response.raise_for_status()
+            current_domain = get_domain(url)
+            if current_domain.endswith('.jp'):
+                response.encoding = 'shift_jis'
+            elif not response.encoding:
+                response.encoding = response.apparent_encoding
+            html_content = response.text
 
-        try:
-            # UnstructuredHTMLLoaderを使用してHTMLからドキュメントを読み込む
-            loader = UnstructuredHTMLLoader(temp_path)
-            documents = loader.load()
+            # 一時ファイルにHTMLを保存（UnstructuredHTMLLoaderの仕様上）
+            with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', suffix='.html', delete=False) as temp_file:
+                temp_file.write(html_content)
+                temp_path = temp_file.name
 
-            # Markdownコンテンツを生成（ヘッダー情報を先頭に追加）
-            domain = current_domain
-            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            markdown_content = [
-                "# ページコンテンツ\n",
-                f"URL: {url}\n",
-                f"ドメイン: {domain}\n",
-                f"取得日時: {current_time}\n\n",
-                "## 本文\n\n"
-            ]
+            try:
+                loader = UnstructuredHTMLLoader(temp_path)
+                documents = loader.load()
 
-            for doc in documents:
-                markdown_content.append(doc.page_content)
-
-            return ''.join(markdown_content)
-
-        finally:
-            # 作成した一時ファイルを削除
-            os.unlink(temp_path)
+                domain = current_domain
+                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                markdown_content = [
+                    "# ページコンテンツ\n",
+                    f"URL: {url}\n",
+                    f"ドメイン: {domain}\n",
+                    f"取得日時: {current_time}\n\n",
+                    "## 本文\n\n"
+                ]
+                for doc in documents:
+                    markdown_content.append(doc.page_content)
+                return ''.join(markdown_content)
+            finally:
+                os.unlink(temp_path)
 
     except requests.RequestException as e:
         return f"# エラー\n\nURLの取得中にエラーが発生しました: {str(e)}\n"
@@ -86,24 +110,20 @@ def extract_related_urls(url, domain):
 
     ※変更点:
       - 従来のaタグによるリンク抽出に加え、
-      - scriptタグ内に埋め込まれたJavaScriptのテキストからも
-        正規表現を使用してURLを抽出するほか、
-      - scriptタグおよびiframeタグにおけるsrc属性からもURLを抽出します。
-      また、こちらもエンコーディングを自動検出して適切にデコードします。
-      さらに、対象のURLのドメインが日本のサイト（.jp）であれば、shift_jis を使用します。
+      - scriptタグ内に埋め込まれたJavaScriptのテキストからも正規表現を使用してURLを抽出、
+      - scriptタグおよびiframeタグのsrc属性からもURLを抽出します。
+      また、対象のURLのドメインが日本のサイト（.jp）であれば、shift_jisを使用します。
     """
     try:
         response = requests.get(url)
         if response.status_code != 200:
             print(f"Failed to retrieve {url}")
             return []
-        # ドメインが日本のサイトか判定
         current_domain = get_domain(url)
         if current_domain.endswith('.jp'):
             response.encoding = 'shift_jis'
         elif not response.encoding:
             response.encoding = response.apparent_encoding
-        # response.text で適切にデコード済みのHTMLを取得
         soup = BeautifulSoup(response.text, "html.parser")
         links = set()
         # aタグによるリンク抽出
@@ -112,15 +132,13 @@ def extract_related_urls(url, domain):
             abs_url = urljoin(url, href)  # 絶対URLに変換
             if get_domain(abs_url) == domain:
                 links.add(abs_url)
-        # scriptタグからのリンク抽出（src属性および内部JavaScriptから）
+        # scriptタグからのリンク抽出（src属性および内部JavaScript）
         for script in soup.find_all("script"):
-            # src属性からの抽出
             if script.has_attr("src"):
                 src_url = script.get("src")
                 abs_url = urljoin(url, src_url)
                 if get_domain(abs_url) == domain:
                     links.add(abs_url)
-            # 内部JavaScriptのテキストからの抽出
             if script.string:
                 found_urls = re.findall(r"(https?://[^\s'\"<>]+)", script.string)
                 for found_url in found_urls:
@@ -162,18 +180,15 @@ def crawl_and_collect_markdown_parallel(start_url, max_pages=50):
     queue = [start_url]
     markdown_results = []
 
-    # グローバルなThreadPoolExecutorを用いてバッチごとに並列処理（max_workers=20）
     with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
         while queue and len(visited) < max_pages:
             current_batch = []
-            # 未訪問のURLをバッチに収集（最大で残り処理可能数分）
             while queue and len(current_batch) < (max_pages - len(visited)):
                 next_url = queue.pop(0)
                 if next_url in visited:
                     continue
                 current_batch.append(next_url)
 
-            # バッチ内の各URLを並列で処理
             future_to_url = {executor.submit(process_single_url, url, domain): url for url in current_batch}
 
             for future in concurrent.futures.as_completed(future_to_url):
@@ -183,15 +198,10 @@ def crawl_and_collect_markdown_parallel(start_url, max_pages=50):
                 except Exception as e:
                     md = f"# エラー\n\n{url} の処理中にエラーが発生しました: {e}\n"
                     related = []
-                # 各ページの先頭にURLの見出しを追加
                 header = f"\n\n# {url}\n\n"
                 markdown_results.append(header + md)
                 visited.add(url)
-
-                # ページの処理が完了した旨のメッセージを出力
                 print(f"Finished processing: {url}")
-
-                # 抽出した関連URLをキューに追加（重複排除）
                 for rel_url in related:
                     if rel_url not in visited and rel_url not in queue and len(visited) + len(queue) < max_pages:
                         queue.append(rel_url)
@@ -210,19 +220,16 @@ def crawl_and_collect_markdown_deepsearch(start_url):
     visited = set()
     markdown_results = []
 
-    # レベル0: 開始URLの処理
     print(f"Processing: {start_url}")
     md_start = fetch_url_to_markdown(start_url)
     markdown_results.append(f"\n\n# {start_url}\n\n" + md_start)
     visited.add(start_url)
 
-    # レベル1: 開始URLから関連URLを抽出（最大20件）
     level1_urls = extract_related_urls(start_url, domain)
-    level1_urls = list(dict.fromkeys(level1_urls))  # 重複排除
+    level1_urls = list(dict.fromkeys(level1_urls))
     if len(level1_urls) > 20:
         level1_urls = level1_urls[:20]
 
-    # レベル1を並列処理（max_workers=20）
     results_level1 = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
         future_to_url = {executor.submit(process_single_url, url, domain): url for url in level1_urls if url not in visited}
@@ -240,11 +247,9 @@ def crawl_and_collect_markdown_deepsearch(start_url):
     for url, md, _ in results_level1:
         markdown_results.append(f"\n\n# {url}\n\n" + md)
 
-    # レベル2: 各レベル1の関連URLから抽出（各最大10件）
     with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
         future_to_url = {}
         for parent_url, _, related in results_level1:
-            # 重複排除＆既に処理済みのURLは除外
             unique_related = []
             for rel_url in related:
                 if rel_url not in visited:
@@ -266,11 +271,14 @@ def crawl_and_collect_markdown_deepsearch(start_url):
 
     return "\n\n".join(markdown_results)
 
-def save_markdown_file(content, output_dir="output"):
+def save_markdown_file(content, output_dir=None):
     """
-    生成したMarkdown文字列を output ディレクトリ直下に
+    生成したMarkdown文字列を、ツールファイルと同じ階層の output ディレクトリに
     タイムスタンプ付きファイル名で保存する関数
     """
+    if output_dir is None:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        output_dir = os.path.join(base_dir, "output")
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
