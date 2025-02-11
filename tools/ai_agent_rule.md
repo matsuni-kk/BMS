@@ -29,34 +29,44 @@ workflow:
     - Markdownファイル生成ツール（markitdown）
     - URL解析・MD変換ツール（url_md）
     - ワードクラウド生成ツール（wordcloud）
+    - Windows PC軽量化ツール（pc_lightener）
+    - YouTube MP3抽出ツール（youtube4mp3）
+    - 音声文字起こしツール（vosk）
+    - フォルダ内全ファイルMD変換ツール（markitdown_anyfolder）
+    - ディレクトリ構造MD出力ツール（dir_structure_md）
   timing: |
     toolsでの作業を開始する際には、以下の手順で進めてください：
-    
+
     1. 作業の種類を特定し、適切なサブディレクトリを選択します：
        - ファイル分割ツール → file_splitter
        - グラフ生成 → graph_maker
        - Markdown生成 → markitdown
        - URL解析・MD変換 → url_md
        - ワードクラウド生成 → wordcloud
-    
+       - Windows PC軽量化ツール → pc_lightener
+       - YouTube MP3抽出ツール → youtube4mp3
+       - 音声文字起こしツール → vosk
+       - フォルダ内全ファイルMD変換ツール → markitdown_anyfolder
+       - ディレクトリ構造MD出力ツール → dir_structure_md
+
     2. 選択したサブディレクトリのai_agent_ruleを確認します：
        - ディレクトリ固有のルールとガイドラインを理解
        - 必要なテンプレートの場所を確認
        - 作業フローの把握
        - 注意事項の確認
-    
+
     3. 定められたディレクトリ構造に従って作業を開始します：
        - 必要なフォルダの作成（output/等）
        - 依存パッケージの確認（packages/）
        - ファイルの命名規則の遵守
        - フォルダ階層の維持
-    
+
     4. 作業ログを適切に記録します：
        - タスク開始時の記録
        - 進捗状況の更新
        - 問題点や課題の記録
        - 完了時の記録
-    
+
     5. 必要に応じてテストを実施します：
        - テストケースの作成
        - テストの実行
@@ -232,4 +242,4 @@ workflow:
       2. `python dir_structure_md.py`を実行（フォルダパスを引数として指定）
       3. 生成されたMarkdownファイルは output/ ディレクトリに保存
       4. ファイル名は `dir_structure_YYYYMMDD_HHMMSS.md` 形式
-    directory: tools/markitdown_anyfolder/
+    directory: tools/dir_structure_md/
