@@ -287,7 +287,7 @@ output/
       タスク開始時のワークフローです
     timing: |
       1. ユーザーがタスク依頼を実施したときに実施します
-    steps:
+    action:
       1. `workflow/common_workflow.md`を参照する
       2. `workflow/common_workflow.md`に沿って処理を実施する
       3. ユーザーに処理内容を報告する
@@ -297,7 +297,7 @@ output/
       `workflow/common_workflow.md`処理完了後に実際にタスクを行う際のワークフローです
     timing: |
       1. `workflow/common_workflow.md`処理完了後にユーザーの返信を確認次第実施
-    steps:
+    action:
       1. `workflow/common_workflow.md`処理完了後にユーザーに使用するWFを確認する
       2. 指定がない場合は`standard_workflow.md`に沿って処理を実施する
       3. 処理完了後、ユーザーに処理内容を報告する
