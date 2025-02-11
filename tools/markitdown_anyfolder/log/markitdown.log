@@ -5,3 +5,8 @@
 2025-02-06 18:19:42,472 - __main__ - DEBUG - 変換処理完了
 2025-02-06 18:19:42,495 - __main__ - DEBUG - 保存先: D:\BMS\tools\markitdown_anyfolder\output\ai_agent_rule_format_20250206_181942.md
 2025-02-06 18:19:42,555 - __main__ - DEBUG - 保存完了
+2025-02-11 13:52:33,800 - __main__ - DEBUG - 入力ディレクトリ: D:\BMS\workspace\novel_workspace\log
+2025-02-11 13:52:33,801 - __main__ - DEBUG - 変換対象ファイル: D:\BMS\workspace\novel_workspace\log\ai_agent_rule.md
+2025-02-11 13:52:33,802 - __main__ - DEBUG - Markdownファイルの読み込み
+2025-02-11 13:52:33,803 - __main__ - DEBUG - 保存先: D:\BMS\tools\markitdown_anyfolder\output\combined_20250211_135233.md
+2025-02-11 13:52:33,806 - __main__ - DEBUG - 保存完了

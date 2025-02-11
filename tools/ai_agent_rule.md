@@ -74,9 +74,10 @@ workflow:
       - 長文のテキストを管理しやすい大きさに分割したい場合
       - ファイルを指定した数に分割してチーム間で分担する場合
     action: |
-      1. file_splitter.pyを実行（ファイルパスと分割数を引数として指定）
-      2. 分割されたファイルは output/ ディレクトリに保存
-      3. ファイル名は {元のファイル名}_split_{番号}{元の拡張子} 形式
+      1. `cd tools/file_splitter`でディレクトリ移動
+      2. `python file_splitter.py`を実行（ファイルパスと分割数を引数として指定）
+      3. 分割されたファイルは output/ ディレクトリに保存
+      4. ファイル名は `{元のファイル名}_split_{番号}{元の拡張子}` 形式
     directory: tools/file_splitter/
 
   graph_maker:
@@ -91,9 +92,10 @@ workflow:
       - 時系列データを折れ線グラフで表示したい場合
       - データの分布を散布図で確認したい場合
     action: |
-      1. graph_maker.pyを実行
-      2. GUIウィンドウが開くので、ファイルを選択し設定を行う
-      3. 作成したグラフは画面に表示され、保存時は選択した形式（PNG/JPEG/PDF）で出力
+      1. `cd tools/graph_maker`でディレクトリ移動
+      2. `python graph_maker.py`を実行
+      3. GUIウィンドウが開くので、ファイルを選択し設定を行う
+      4. 作成したグラフは画面に表示され、保存時は選択した形式（PNG/JPEG/PDF）で出力
     directory: tools/graph_maker/
 
   markitdown:
@@ -107,9 +109,10 @@ workflow:
       - 画像ファイルからOCRでテキストを抽出してMarkdown化したい場合
       - 複数の異なる形式のファイルを統一的なMarkdown形式で管理したい場合
     action: |
-      1. markitdown.pyを実行（ファイルパスを引数として指定）
-      2. 変換結果は output/ ディレクトリに保存
-      3. ファイル名は {元のファイル名}_{タイムスタンプ}.md 形式
+      1. `cd tools/markitdown`でディレクトリ移動
+      2. `python markitdown.py`を実行（ファイルパスを引数として指定）
+      3. 変換結果は output/ ディレクトリに保存
+      4. ファイル名は `{元のファイル名}_{タイムスタンプ}.md` 形式
     directory: tools/markitdown/
 
   url_md:
@@ -123,9 +126,10 @@ workflow:
       - 複数のWebページの内容を一括でMarkdown化したい場合
       - オンラインPDFをMarkdown形式でダウンロードしたい場合
     action: |
-      1. url_md.pyを実行（URLとモードを引数として指定）
-      2. 変換結果は output/ ディレクトリに保存
-      3. ファイル名はURLから自動生成
+      1. `cd tools/url_md`でディレクトリ移動
+      2. `python url_md.py`を実行（URLとモードを引数として指定）
+      3. 変換結果は output/ ディレクトリに保存
+      4. ファイル名はURLから自動生成
     directory: tools/url_md/
 
   wordcloud:
@@ -139,9 +143,10 @@ workflow:
       - 文書の頻出単語を視覚的に表現したい場合
       - プレゼンテーション用のワードクラウドを作成したい場合
     action: |
-      1. generate_wordcloud.pyを実行（CSVファイルパスと列名を引数として指定）
-      2. 生成されたワードクラウドは output/ ディレクトリに保存
-      3. ファイル名は {元ファイル名}_{列名}_wordcloud.png 形式
+      1. `cd tools/wordcloud`でディレクトリ移動
+      2. `python generate_wordcloud.py`を実行（CSVファイルパスと列名を引数として指定）
+      3. 生成されたワードクラウドは output/ ディレクトリに保存
+      4. ファイル名は `{元ファイル名}_{列名}_wordcloud.png` 形式
     directory: tools/wordcloud/
 
   pc_lightener:
@@ -156,9 +161,10 @@ workflow:
       - システムのパフォーマンスを向上させたい場合
       - メモリ使用率が高くなっている場合
     action: |
-      1. pc_lightener.pyを管理者権限で実行
-      2. 自動的に各最適化処理を実行
-      3. 処理結果は標準出力に表示
+      1. `cd tools/pc_lightener`でディレクトリ移動
+      2. `python pc_lightener.py`を管理者権限で実行
+      3. 自動的に各最適化処理を実行
+      4. 処理結果は標準出力に表示
     directory: tools/pc_lightener/
 
   youtube4mp3:
@@ -172,9 +178,10 @@ workflow:
       - オフライン再生用に音声を抽出したい場合
       - 動画コンテンツから音声素材を作成したい場合
     action: |
-      1. youtube_audio_extractor.pyを実行（URLを引数として指定）
-      2. 抽出されたMP3は output/ ディレクトリに保存
-      3. ファイル名は動画タイトルに基づいて自動生成
+      1. `cd tools/youtube4mp3`でディレクトリ移動
+      2. `python youtube_audio_extractor.py`を実行（@は使わずにURLを引数として指定）
+      3. 抽出されたMP3は output/ ディレクトリに保存
+      4. ファイル名は動画タイトルに基づいて自動生成
     directory: tools/youtube4mp3/
 
   vosk:
@@ -188,9 +195,10 @@ workflow:
       - システム音声（音楽、動画等）を文字起こししたい場合
       - リアルタイムでの音声認識が必要な場合
     action: |
-      1. vosk_transcripter.pyを実行
-      2. 文字起こし結果は output/YYYYMMDD/ に保存
-      3. 1時間ごとに新しいファイルを作成
+      1. `cd tools/vosk`でディレクトリ移動
+      2. `python vosk_transcripter.py`を実行
+      3. 文字起こし結果は output/YYYYMMDD/ に保存
+      4. 1時間ごとに新しいファイルを作成
     directory: tools/vosk/
 
   markitdown_anyfolder:
@@ -204,7 +212,8 @@ workflow:
       - 複数の異なる形式のファイルを1つのMarkdownにまとめたい場合
       - フォルダ階層を維持したままドキュメントを統合したい場合
     action: |
-      1. markitdown_anyfolder.pyを実行（フォルダパスを引数として指定）
-      2. 変換結果は output/ ディレクトリに保存
-      3. ファイル名は combined_YYYYMMDD_HHMMSS.md 形式
+      1. `cd tools/markitdown_anyfolder`でディレクトリ移動
+      2. `python markitdown_anyfolder.py`を実行（フォルダパスを引数として指定）
+      3. 変換結果は output/ ディレクトリに保存
+      4. ファイル名は `combined_YYYYMMDD_HHMMSS.md` 形式
     directory: tools/markitdown_anyfolder/
