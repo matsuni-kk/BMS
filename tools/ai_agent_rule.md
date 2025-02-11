@@ -217,3 +217,19 @@ workflow:
       3. 変換結果は output/ ディレクトリに保存
       4. ファイル名は `combined_YYYYMMDD_HHMMSS.md` 形式
     directory: tools/markitdown_anyfolder/
+
+  dir_structure_md:
+    information: |
+      指定したフォルダのディレクトリ構造をMarkdown形式で出力するツールです。
+      フォルダとファイル名のみを抽出し、リスト形式で表示します。
+    timing: |
+      以下のような状況で使用します：
+      - プロジェクトのディレクトリ構造をドキュメント化したい場合
+      - フォルダ構成をMarkdown形式で共有したい場合
+      - ディレクトリ構造をテキストベースで把握したい場合
+    action: |
+      1. `cd tools\dir_structure_md`でディレクトリ移動
+      2. `python dir_structure_md.py`を実行（フォルダパスを引数として指定）
+      3. 生成されたMarkdownファイルは output/ ディレクトリに保存
+      4. ファイル名は `dir_structure_YYYYMMDD_HHMMSS.md` 形式
+    directory: tools/markitdown_anyfolder/

@@ -13,13 +13,11 @@
       6. ハイバネーションの無効化（hiberfil.sys の削除）【※休止状態を使用する場合は実行しないでください】
       7. Windowsエラーレポート (WER) の削除
       8. IE/Edge のキャッシュ（INetCache）の削除
-      9. Windowsディスククリーンアップツール（cleanmgr）の実行 ※「cleanmgr /sageset:1」で事前に設定が必要
-     10. コンポーネントストアのクリーンアップ ※chrome、cursor、vscode 系およびプログラミング関連パッケージ以外を対象
-     11. ログファイルの削除 ※chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外
-     12. 不要なバックアップファイルの整理 ※chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外（.bak、.old、.backup など）
-     13. その他の一時ファイルやキャッシュの削除 ※chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外
-
-    ※各処理は管理者権限での実行が必須です。実行前に十分な検証およびバックアップを取得し、自己責任でご利用ください。
+      9. コンポーネントストアのクリーンアップ ※chrome、cursor、vscode 系およびプログラミング関連パッケージ以外を対象
+     10. ログファイルの削除 ※chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外
+     11. 不要なバックアップファイルの整理 ※chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外（.bak、.old、.backup など）
+     12. その他の一時ファイルやキャッシュの削除 ※chrome、cursor、vscode 系およびプログラミング関連パッケージを含むパスは対象外
+     13. Windowsディスククリーンアップツール（cleanmgr）の実行 ※「cleanmgr /sageset:1」で事前に設定が必要
 """
 
 import os
@@ -276,8 +274,6 @@ def run_disk_cleanup():
     except subprocess.CalledProcessError as e:
         print(f"ディスククリーンアップに失敗しました: {e}")
 
-# --- 追加機能 ---
-
 def clean_component_store():
     """
     コンポーネントストアのクリーンアップを実行します。
@@ -376,8 +372,8 @@ if __name__ == "__main__":
     disable_hibernation()      # ※休止状態を使用する場合はこの呼び出しをコメントアウトしてください
     clean_error_reports()
     clean_inet_cache()
-    run_disk_cleanup()
     clean_component_store()
     clean_log_files()
     clean_backup_files()
-    clean_misc_cache_files() 
+    clean_misc_cache_files()
+    run_disk_cleanup()
