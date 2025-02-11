@@ -62,7 +62,10 @@ class DirStructureToMarkdown:
             markdown_lines.append(f"{indent}{root_name}/")
             sub_indent = '    ' * (level + 1)
             for f in files:
-                markdown_lines.append(f"{sub_indent}├── {f}")
+                file_path = Path(root) / f
+                file_size = file_path.stat().st_size
+                file_size_str = self._format_file_size(file_size)
+                markdown_lines.append(f"{sub_indent}├── {f} ({file_size_str})")
             if not files and not dirs and root != str(dir_path): # rootがdir_path自身でない場合のみ
                 markdown_lines.pop() # 親ディレクトリのエントリを削除
                 markdown_lines.append(f"{indent}{root_name}/  # 空")
@@ -109,6 +112,22 @@ class DirStructureToMarkdown:
             logger.exception("詳細なエラー情報:")
             print(f"エラーが発生しました: {str(e)}")
             sys.exit(1)
+
+    def _format_file_size(self, size_in_bytes: int) -> str:
+        """
+        ファイルサイズを適切な単位でフォーマットします。
+        """
+        if size_in_bytes < 1024:
+            return f"{size_in_bytes} B"
+        elif size_in_bytes < 1024 * 1024:
+            size_in_kb = size_in_bytes / 1024
+            return f"{size_in_kb:.2f} KB"
+        elif size_in_bytes < 1024 * 1024 * 1024:
+            size_in_mb = size_in_bytes / (1024 * 1024)
+            return f"{size_in_mb:.2f} MB"
+        else:
+            size_in_gb = size_in_bytes / (1024 * 1024 * 1024)
+            return f"{size_in_gb:.2f} GB"
 
 
 def main():
