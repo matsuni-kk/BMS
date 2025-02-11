@@ -5,6 +5,9 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from pathlib import Path
 import numpy as np
+import mplcursors
+import plotly.express as px
+import plotly.graph_objects as go
 
 class GraphMaker:
     def __init__(self):
@@ -47,10 +50,13 @@ class GraphMaker:
         self.add_y_axis_combobox()
         self.add_y_axis_btn = ttk.Button(graph_frame, text="Y軸追加", command=self.add_y_axis_combobox)
         self.add_y_axis_btn.grid(row=1, column=2, padx=5, pady=5)
+        # 新機能追加: 追加したY軸を削除するためのボタンを追加
+        self.remove_y_axis_btn = ttk.Button(graph_frame, text="Y軸削除", command=self.remove_y_axis_combobox)
+        self.remove_y_axis_btn.grid(row=1, column=3, padx=5, pady=5)
 
         # グラフタイプ選択
         ttk.Label(graph_frame, text="グラフタイプ:").grid(row=2, column=0, padx=5, pady=5)
-        self.graph_type = ttk.Combobox(graph_frame, values=["折れ線グラフ", "棒グラフ", "散布図", "ヒストグラム"], state="readonly")
+        self.graph_type = ttk.Combobox(graph_frame, values=["折れ線グラフ", "棒グラフ", "散布図", "ヒストグラム", "面グラフ", "箱ひげ図", "パイチャート"], state="readonly")
         self.graph_type.set("折れ線グラフ")
         self.graph_type.grid(row=2, column=1, padx=5, pady=5)
         
@@ -115,83 +121,116 @@ class GraphMaker:
             if columns:
                 combobox.set(columns[0])
 
+    def remove_y_axis_combobox(self):
+        """追加されたY軸のコンボボックスを削除します（最低1つは残す）"""
+        if len(self.y_axis_comboboxes) > 1:
+            # 最後に追加されたコンボボックスを取得して削除
+            combobox = self.y_axis_comboboxes.pop()
+            combobox.destroy()
+        else:
+            messagebox.showinfo("情報", "最低1つのY軸は必要です")
+
     def create_graph(self):
         if self.df is None:
             messagebox.showwarning("警告", "データが読み込まれていません")
             return
 
-        # グラフ作成: オブジェクト指向のAPIを利用してサブプロットを生成（サイズは10×6）
-        self.figure, ax = plt.subplots(figsize=(10, 6))
         x_col = self.x_axis.get()
         y_cols = [cb.get() for cb in self.y_axis_comboboxes if cb.get()]
         if not y_cols:
             messagebox.showwarning("警告", "Y軸の列が選択されていません")
             return
 
-        # 各系列に色を割り当てる
-        colors = plt.rcParams['axes.prop_cycle'].by_key().get('color', ['blue', 'orange', 'green', 'red', 'purple', 'brown', 'pink', 'gray', 'olive', 'cyan'])
+        # カラーパレット（Plotly の標準カラーセットを利用）
+        colors = px.colors.qualitative.Plotly
 
+        # グラフ作成（グラフタイプに応じた処理）
         if self.graph_type.get() == "折れ線グラフ":
+            fig = go.Figure()
             for i, col in enumerate(y_cols):
-                ax.plot(self.df[x_col], self.df[col], marker='o', label=col, color=colors[i % len(colors)])
-            ax.legend()
+                fig.add_trace(go.Scatter(x=self.df[x_col], y=self.df[col],
+                                          mode='lines+markers',
+                                          name=col,
+                                          marker=dict(color=colors[i % len(colors)])))
         elif self.graph_type.get() == "棒グラフ":
-            positions = np.arange(len(self.df[x_col]))
-            num = len(y_cols)
-            bar_width = 0.8 / num
+            fig = go.Figure()
             for i, col in enumerate(y_cols):
-                offset = (i - num/2) * bar_width + bar_width/2
-                ax.bar(positions + offset, self.df[col], width=bar_width, label=col, color=colors[i % len(colors)])
-            ax.xticks(positions, self.df[x_col], rotation=45, fontsize=8)
-            ax.legend()
+                fig.add_trace(go.Bar(x=self.df[x_col], y=self.df[col],
+                                       name=col,
+                                       marker_color=colors[i % len(colors)]))
+            fig.update_layout(barmode='group')
         elif self.graph_type.get() == "ヒストグラム":
+            fig = go.Figure()
             for i, col in enumerate(y_cols):
-                ax.hist(self.df[col], label=col, alpha=0.5, color=colors[i % len(colors)])
-            ax.legend()
-        else:  # 散布図
+                fig.add_trace(go.Histogram(x=self.df[col],
+                                           name=col,
+                                           opacity=0.5,
+                                           marker=dict(color=colors[i % len(colors)])))
+            fig.update_layout(barmode='overlay')
+        elif self.graph_type.get() == "面グラフ":
+            fig = go.Figure()
             for i, col in enumerate(y_cols):
-                ax.scatter(self.df[x_col], self.df[col], label=col, color=colors[i % len(colors)])
-            ax.legend()
+                fig.add_trace(go.Scatter(x=self.df[x_col], y=self.df[col],
+                                          mode='lines',
+                                          fill='tozeroy',
+                                          name=col,
+                                          marker=dict(color=colors[i % len(colors)])))
+        elif self.graph_type.get() == "箱ひげ図":
+            fig = go.Figure()
+            for i, col in enumerate(y_cols):
+                fig.add_trace(go.Box(y=self.df[col],
+                                      name=col,
+                                      marker=dict(color=colors[i % len(colors)])))
+        elif self.graph_type.get() == "パイチャート":
+            if len(y_cols) != 1:
+                messagebox.showwarning("警告", "パイチャートは1つのY軸を選択してください")
+                return
+            fig = go.Figure(data=[go.Pie(labels=self.df[x_col], values=self.df[y_cols[0]], name=y_cols[0])])
+        elif self.graph_type.get() == "散布図":
+            fig = go.Figure()
+            for i, col in enumerate(y_cols):
+                fig.add_trace(go.Scatter(x=self.df[x_col], y=self.df[col],
+                                          mode='markers',
+                                          name=col,
+                                          marker=dict(color=colors[i % len(colors)])))
+        else:
+            # それ以外の場合は散布図をデフォルトとする
+            fig = go.Figure()
+            for i, col in enumerate(y_cols):
+                fig.add_trace(go.Scatter(x=self.df[x_col], y=self.df[col],
+                                          mode='markers',
+                                          name=col,
+                                          marker=dict(color=colors[i % len(colors)])))
 
-        # 軸のラベルを日本語で設定
-        ax.set_xlabel(x_col)
-        if len(y_cols) == 1:
-            ax.set_ylabel(y_cols[0])
-        else:
-            ax.set_ylabel("値")
-        
-        # グラフタイトルを日本語で設定
-        title_text = self.title_input.get()
-        if title_text:
-            ax.set_title(title_text)
-        else:
+        # 軸ラベルの設定（ヒストグラム、箱ひげ図、パイチャート以外はX軸に指定列を使用）
+        if self.graph_type.get() not in ["ヒストグラム", "箱ひげ図", "パイチャート"]:
+            fig.update_xaxes(title_text=x_col)
             if len(y_cols) == 1:
-                ax.set_title(f"{x_col} と {y_cols[0]} に関するグラフ")
+                fig.update_yaxes(title_text=y_cols[0])
             else:
-                ax.set_title(f"{x_col} と {', '.join(y_cols)} に関するグラフ")
-        
-        # グリッド表示（横線のみ）の設定（日本語コメント）
-        if self.grid_var.get():
-            ax.grid(True, axis='y')
-        else:
-            ax.grid(False)
+                fig.update_yaxes(title_text="値")
 
-        # 横軸ラベルが重ならないように調整する (棒グラフ以外の場合)
-        if self.graph_type.get() != "棒グラフ":
-            if pd.api.types.is_numeric_dtype(self.df[x_col]):
-                ax.locator_params(axis='x', nbins=10)
-                ax.set_xticks(rotation=45, fontsize=8)
+        # グラフタイトルの設定
+        title_text = self.title_input.get()
+        if not title_text:
+            if self.graph_type.get() == "ヒストグラム":
+                title_text = f"{', '.join(y_cols)} のヒストグラム"
+            elif self.graph_type.get() == "箱ひげ図":
+                title_text = f"{', '.join(y_cols)} の箱ひげ図"
+            elif self.graph_type.get() == "パイチャート":
+                title_text = f"{x_col} と {y_cols[0]} のパイチャート"
+            elif self.graph_type.get() == "面グラフ":
+                title_text = f"{x_col} と {', '.join(y_cols)} の面グラフ"
             else:
-                labels = [label.get_text() for label in ax.get_xticklabels()]
-                if len(labels) > 10:
-                    step = max(1, int(len(labels) / 10))
-                    new_labels = [labels[i] if i % step == 0 else '' for i in range(len(labels))]
-                    ax.set_xticklabels(new_labels, rotation=45, fontsize=8)
+                if len(y_cols) == 1:
+                    title_text = f"{x_col} と {y_cols[0]} に関するグラフ"
                 else:
-                    ax.set_xticks(rotation=45, fontsize=8)
-        # サブプロットの配置を自動調整（日本語コメント）
-        plt.tight_layout()
-        plt.show()
+                    title_text = f"{x_col} と {', '.join(y_cols)} に関するグラフ"
+        fig.update_layout(title=title_text, template="plotly_white")
+
+        # Plotly はデフォルトでインタラクティブなツールチップなどを提供します
+        self.figure = fig
+        fig.show()
 
     def save_graph(self):
         if not hasattr(self, "figure") or self.figure is None:
@@ -203,9 +242,15 @@ class GraphMaker:
             filetypes=[("PNG画像", "*.png"), ("JPEG画像", "*.jpg"), ("PDF文書", "*.pdf")]
         )
         if file_path:
-            # 新機能変更: 自身のfigureを使ってグラフを保存
-            self.figure.savefig(file_path, dpi=300, bbox_inches='tight')
-            messagebox.showinfo("成功", "グラフを保存しました")
+            try:
+                # Plotly でグラフを画像として保存する場合は、kaleido のインストールが必要です
+                if file_path.endswith(".html"):
+                    self.figure.write_html(file_path)
+                else:
+                    self.figure.write_image(file_path)
+                messagebox.showinfo("成功", "グラフを保存しました")
+            except Exception as e:
+                messagebox.showerror("エラー", f"グラフの保存に失敗しました: {e}")
 
     # 新機能追加: 読み込んだデータのプレビュー表示
     def preview_data(self):
