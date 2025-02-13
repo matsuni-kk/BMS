@@ -239,7 +239,12 @@ workflow:
       - ディレクトリ構造をテキストベースで把握したい場合
     action: |
       1. `cd tools\dir_structure_md`でディレクトリ移動
-      2. `python dir_structure_md.py`を実行（フォルダパスを引数として指定）
-      3. 生成されたMarkdownファイルは output/ ディレクトリに保存
-      4. ファイル名は `dir_structure_YYYYMMDD_HHMMSS.md` 形式
+      2. 以下のいずれかのコマンドを実行:
+         - 【期間指定なしの場合】
+           `python dir_structure_md.py <directory_path>`
+         - 【期間指定ありの場合】（更新日時によるフィルター機能あり）
+           `python dir_structure_md.py <directory_path> "<start_date>" "<end_date>"`
+           ※ 日付のフォーマットは `YYYY-MM-DD` （例: "2023-01-01"）
+      3. 生成されたMarkdownファイルは output/ ディレクトリに保存されます。
+      4. ファイル名は `dir_structure_YYYYMMDD_HHMMSS.md` 形式となります。
     directory: tools/dir_structure_md/
