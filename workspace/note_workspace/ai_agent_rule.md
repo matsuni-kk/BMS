@@ -63,6 +63,10 @@ workspace/note_workspace/
 │   │   └── README.md
 ├── prompts/
 │   └── ai_agent_rule.md
+├── idea/
+│   └── ai_agent_rule.md
+├── workflow/
+│   └── ai_agent_rule.md
 └── writing_in_progress/
     └── 【記事タイトル】/  
         ├── draft/       
@@ -73,6 +77,48 @@ workspace/note_workspace/
         │   └── [メモファイル].md (例: memo.md)
         ├── 要件.md       
         └── 文章.md       
+
+workspace/
+├── note_workspace/        # 現在のディレクトリ
+├── business_tasks_workspace/   # ビジネスタスク管理
+├── daily_reflections_workspace/  # 日々の振り返り
+├── ideas_workspace/       # アイデア管理
+├── investment_workspace/  # 投資関連
+├── novel_workspace/      # 小説執筆
+├── private_tasks_workspace/  # プライベートタスク
+└── sales_workspace/      # 営業関連
+
+## task_detail.mdテンプレート
+
+#### 基本情報
+- タスクID（tasklist.tsvと同一のID）
+- タスク名
+- 担当者
+- 開始日時
+- 期限
+- 優先度
+- ステータス
+- タスク種別（定例/プロジェクト/その他）
+
+#### 詳細情報
+- タスク概要
+- 目的
+- 必要なインプットデータ
+- 期待される成果物
+- 前提条件
+- 制約事項
+
+#### 利用ファイル情報
+##### インプットファイル
+```
+input/
+├── [ファイル名1]
+│   └── 用途：[このファイルの使用目的]
+├── [ファイル名2]
+│   └── 用途：[このファイルの使用目的]
+└── [関連ディレクトリ名]/
+    └── 用途：[このディレクトリの使用目的]
+```
 
 ## ワークフロー
 
@@ -94,7 +140,6 @@ workspace/note_workspace/
         - 作成したタイトルフォルダにdraft、idea、memoフォルダがない場合はフォルダを作成する。
         - フォルダを作成するときは必ずai_agent_ruleを作成する。
       directory: writing_in_progress/ai_agent_rule.md
-
 
     past_articles:
         information: |
@@ -213,4 +258,4 @@ workspace/note_workspace/
   - 引用の適切性
   - 文書の流れ
 
-最終更新日: 2025/2/5
+最終更新日: 2025/2/17
