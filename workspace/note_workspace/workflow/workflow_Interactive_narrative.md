@@ -9,15 +9,19 @@
      * 初期ステータスを「新規」として記録
 
 ### 2. アイデアファイルを確認
-1. BMS\workspace\note_workspace\idea\idea_Interactive_narrative.mdを確認
+1. `BMS\workspace\note_workspace\idea\idea_Interactive_narrative.md`を確認
 2. チェックボックスを確認し、完了していない項目から実施
 3. 対象トピックを元に次タスクを実施。
 
 ### 3. タスク実施
-1. 対象トピック名を抽出し、BMS\workspace\note_workspace\past_articles\Interactive_narrative直下にXXXX.md形式でファイルを作成。
+1. 対象トピック名を抽出し、BMS\workspace\note_workspace\past_articles\Interactive_narrative直下にXXXX.md形式（必ず英名で）でファイルを作成。
 2. チェックボックスを確認し、完了していない項目から実施
 3. 対象トピックを変数として`D:\BMS\workspace\note_workspace\prompts\Interactive_narrative.md`に記載のあるプロンプトを実行。
 4. 生成結果をXXXX.mdファイルに記載。
+- 絶対に省略せず、物語全てを記載すること。
+5. 生成後、チェックボックスにチェック記載。
+- 絶対に1つもアイデアの起債を省略せず、チェックボックスの変更のみ記載すること。
+- 必ず必ず全文記載すること
 
 ### 4. タスク完了報告
 1. タスクの完了時に以下を実施：
@@ -25,3 +29,10 @@
      * 完了日時の記録
      * ステータスを「完了」に変更
 2. ユーザーに完了の旨を報告。
+
+### 5. タスク完了後のループ処理
+1. タスク完了後、必ず必ず次のループへ移行。
+2. 次以降のチェックボックスにチェックがついていない項目があるか確認。
+3. チェックがついていない項目があれば、必ず必ず`1.`に戻る。
+4. チェックがついている項目がなければ、完了。
+
