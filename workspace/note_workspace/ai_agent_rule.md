@@ -34,6 +34,7 @@
 
 workspace/note_workspace/
 ├── ai_agent_rule.md
+├── tasklist.tsv
 ├── log/
 │   └── ai_agent_rule.md
 ├── past_articles/
@@ -49,6 +50,7 @@ workspace/note_workspace/
 │   │   ├── README.md
 │   ├── idea_development/
 │   │   ├── README.md
+│   ├── Interactive_narrative/
 │   ├── knowledge_base/
 │   │   ├── README.md
 │   ├── learning_records/
@@ -60,7 +62,7 @@ workspace/note_workspace/
 │   ├── research_notes/
 │   │   ├── README.md
 │   └── technical_docs/
-│   │   └── README.md
+│       └── README.md
 ├── prompts/
 │   └── ai_agent_rule.md
 ├── idea/
@@ -182,6 +184,11 @@ input/
           - アイデアの発展記録
           - コンセプト検討
           - 新規提案
+          
+          /Interactive_narrative/
+          - インタラクティブナラティブに関する記事
+          - ストーリーテリング手法
+          - ユーザー体験設計
           
           /knowledge_base/
           - 知識ベース

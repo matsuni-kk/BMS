@@ -8,36 +8,20 @@
      * 優先度、期限の設定
      * 初期ステータスを「新規」として記録
 
-### 2. インプットデータの確認
-1. input/ディレクトリのデータ確認
-2. 必要なインプットデータがない場合は催促
-3. インプットデータ受領後、以下を実施：
-   - daily/YYYYMMDD/task_name/input/へデータを移動
-   - tasklist.tsvの関連ファイル欄を更新
+### 2. アイデアファイルを確認
+1. BMS\workspace\note_workspace\idea\idea_Interactive_narrative.mdを確認
+2. チェックボックスを確認し、完了していない項目から実施
+3. 対象トピックを元に次タスクを実施。
 
-### 3. タスク準備
-1. 作業ディレクトリの作成
-   ```
-   daily/YYYYMMDD/task_name/
-   ├── input/    # 移動したインプットデータ
-   ├── output/   # タスクの成果物
-   └── task_detail.md
-   ```
-2. task_detail.mdの作成
-3. テストケースファイルの作成
-4. tasklist.tsvの更新
-   - ステータスを「準備中」に変更
-   - 作成したファイルパスを関連ファイル欄に追加
+### 3. タスク実施
+1. 対象トピック名を抽出し、BMS\workspace\note_workspace\past_articles\Interactive_narrative直下にXXXX.md形式でファイルを作成。
+2. チェックボックスを確認し、完了していない項目から実施
+3. 対象トピックを変数として`D:\BMS\workspace\note_workspace\prompts\Interactive_narrative.md`に記載のあるプロンプトを実行。
+4. 生成結果をXXXX.mdファイルに記載。
 
-### 4. ユーザー報告
-1. タスクの受け取り時に以下を実施：
-
-
-### 5. 最適なWF選択
-1. ユーザー指定がない場合は`standard_workflow.md`を選択する
-
-2. ユーザー指定がある場合は`business_tasks_workspace\workflow`から最適なWFを選択する
-3. 選択したWFのワークフローを実施する
-
----
-**注意:** このファイル（common_workflow.md）は、業務タスクとプライベートタスクの両方で使用する共通のワークフローです。
+### 4. タスク完了報告
+1. タスクの完了時に以下を実施：
+   - tasklist.tsvへの完了の旨記録
+     * 完了日時の記録
+     * ステータスを「完了」に変更
+2. ユーザーに完了の旨を報告。
