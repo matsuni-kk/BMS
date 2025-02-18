@@ -2623,3 +2623,15 @@ PyPDF2.errors.DependencyError: PyCryptodome is required for AES algorithm
 2025-02-13 00:34:22,787 - __main__ - DEBUG - 変換処理完了
 2025-02-13 00:34:22,788 - __main__ - DEBUG - 保存先: D:\BMS\tools\markitdown_anyfolder\output\2502.07573v1_20250213_003422.md
 2025-02-13 00:34:22,804 - __main__ - DEBUG - 保存完了
+2025-02-17 18:07:45,868 - __main__ - DEBUG - 入力ディレクトリ: D:\環境部
+2025-02-17 18:07:45,872 - __main__ - DEBUG - 変換対象ファイル: D:\環境部\20240704　0919　CDP概要説明（津加専務ご説明用）.pptx
+2025-02-17 18:07:45,876 - __main__ - DEBUG - PowerPointの変換開始
+2025-02-17 18:07:46,126 - __main__ - DEBUG - PowerPointの変換完了
+2025-02-17 18:07:46,138 - __main__ - DEBUG - 変換対象ファイル: D:\環境部\CDP管理者マニュアル（2024.11作成）.pptx
+2025-02-17 18:07:46,156 - __main__ - DEBUG - PowerPointの変換開始
+2025-02-17 18:07:46,455 - __main__ - DEBUG - PowerPointの変換完了
+2025-02-17 18:07:46,457 - __main__ - DEBUG - 変換対象ファイル: D:\環境部\Konoike+Transport+Co.,Ltd.-30-09-2024-CORPORATE-14-18.docx
+2025-02-17 18:07:46,457 - __main__ - DEBUG - Word文書の変換開始
+2025-02-17 18:07:46,772 - __main__ - ERROR - ファイル D:\環境部\Konoike+Transport+Co.,Ltd.-30-09-2024-CORPORATE-14-18.docx の変換中にエラーが発生: invalid literal for int() with base 10: 'e'
+2025-02-17 18:07:46,774 - __main__ - DEBUG - 保存先: D:\BMS\tools\markitdown_anyfolder\output\combined_20250217_180746.md
+2025-02-17 18:07:46,779 - __main__ - DEBUG - 保存完了

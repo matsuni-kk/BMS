@@ -124,6 +124,18 @@
      - 最終更新日: 2025/01/29
      - 特徴: ベクトル検索/キーワード検索/エージェント型RAGなどを解説
 
+## 進行中のプロジェクト
+- AI PoC Project
+  - パス: projects/company_ai_promotion/projects/ai_poc_project/project_detail.md
+  - 概要: AI技術の実用可能性を検証するPoC
+  - 担当者: AI推進チーム
+  - 状況: 立ち上げ準備中
+- 環境部案件
+  - パス: projects/company_ai_promotion/projects/environment_department_project/project_detail.md
+  - 概要: 環境部におけるAI技術の活用可能性を検証するPoC
+  - 担当者: AI推進チーム
+  - 状況: 新規
+
 ## 今後のアクション
 1. 推進体制の確立
    - プロジェクトオーナーの任命
