@@ -28,11 +28,13 @@ pip install yt-dlp
 ## 使用方法
 ### 基本的な使用方法
 ```bash
+cd tools/youtube4mp3
 python youtube_audio_extractor.py <YouTube URL>
 ```
 
 ### カスタムファイル名の指定
 ```bash
+cd tools/youtube4mp3
 python youtube_audio_extractor.py <YouTube URL> --filename "カスタム名.%(ext)s"
 ```
 
