@@ -41,3 +41,116 @@
 2025-02-12 01:36:05,073 - __main__ - DEBUG - 変換処理完了
 2025-02-12 01:36:05,074 - __main__ - DEBUG - 保存先: D:\BMS\tools\markitdown\output\The_Duolingo_Handbook_20250212_013605.md
 2025-02-12 01:36:05,081 - __main__ - DEBUG - 保存完了
+2025-02-20 00:55:15,909 - __main__ - DEBUG - 入力ファイル: D:\BMS\tools\ai_agent_rule.md
+2025-02-20 00:55:15,910 - __main__ - DEBUG - ファイル拡張子: .md
+2025-02-20 00:55:15,911 - __main__ - DEBUG - 変換処理開始: _convert_markdown
+2025-02-20 00:55:15,912 - __main__ - DEBUG - Markdownファイルの読み込み
+2025-02-20 00:55:15,913 - __main__ - DEBUG - 変換処理完了
+2025-02-20 00:55:15,915 - __main__ - DEBUG - 保存先: D:\BMS\tools\markitdown\output\ai_agent_rule_20250220_005515.md
+2025-02-20 00:55:15,919 - __main__ - DEBUG - 保存完了
+2025-02-20 00:56:04,619 - __main__ - DEBUG - 入力ファイル: D:\BMS\document\papers\money\tax_all.pdf
+2025-02-20 00:56:04,620 - __main__ - DEBUG - ファイル拡張子: .pdf
+2025-02-20 00:56:04,620 - __main__ - DEBUG - 変換処理開始: _convert_pdf
+2025-02-20 00:56:04,621 - __main__ - DEBUG - PDFの変換開始
+2025-02-20 00:56:04,698 - __main__ - ERROR - PDF処理エラー: PyCryptodome is required for AES algorithm
+2025-02-20 00:56:04,699 - __main__ - ERROR - 詳細なエラー情報:
+Traceback (most recent call last):
+  File "D:\BMS\tools\markitdown\markitdown.py", line 228, in _convert_pdf
+    reader = PdfReader(str(file_path))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_reader.py", line 339, in __init__
+    self._encryption.verify(pwd) == PasswordType.NOT_DECRYPTED
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 785, in verify
+    key, rc = self.verify_v4(pwd) if self.algV <= 4 else self.verify_v5(pwd)
+                                                         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 836, in verify_v5
+    key = AlgV5.verify_owner_password(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 530, in verify_owner_password
+    AlgV5.calculate_hash(R, password, o_value[32:40], u_value[:48])
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 561, in calculate_hash
+    E = AES_CBC_encrypt(K[:16], K[16:32], K1 * 64)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 162, in AES_CBC_encrypt
+    raise DependencyError("PyCryptodome is required for AES algorithm")
+PyPDF2.errors.DependencyError: PyCryptodome is required for AES algorithm
+2025-02-20 00:56:04,710 - __main__ - ERROR - エラー発生: PyCryptodome is required for AES algorithm
+2025-02-20 00:56:04,711 - __main__ - ERROR - 詳細なエラー情報:
+Traceback (most recent call last):
+  File "D:\BMS\tools\markitdown\markitdown.py", line 105, in convert
+    result = converter(file_path)
+             ^^^^^^^^^^^^^^^^^^^^
+  File "D:\BMS\tools\markitdown\markitdown.py", line 228, in _convert_pdf
+    reader = PdfReader(str(file_path))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_reader.py", line 339, in __init__
+    self._encryption.verify(pwd) == PasswordType.NOT_DECRYPTED
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 785, in verify
+    key, rc = self.verify_v4(pwd) if self.algV <= 4 else self.verify_v5(pwd)
+                                                         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 836, in verify_v5
+    key = AlgV5.verify_owner_password(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 530, in verify_owner_password
+    AlgV5.calculate_hash(R, password, o_value[32:40], u_value[:48])
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 561, in calculate_hash
+    E = AES_CBC_encrypt(K[:16], K[16:32], K1 * 64)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 162, in AES_CBC_encrypt
+    raise DependencyError("PyCryptodome is required for AES algorithm")
+PyPDF2.errors.DependencyError: PyCryptodome is required for AES algorithm
+2025-02-20 00:56:52,655 - __main__ - DEBUG - 入力ファイル: D:\BMS\document\papers\money\tax_all.pdf
+2025-02-20 00:56:52,657 - __main__ - DEBUG - ファイル拡張子: .pdf
+2025-02-20 00:56:52,657 - __main__ - DEBUG - 変換処理開始: _convert_pdf
+2025-02-20 00:56:52,657 - __main__ - DEBUG - PDFの変換開始
+2025-02-20 00:56:52,723 - __main__ - ERROR - PDF処理エラー: PyCryptodome is required for AES algorithm
+2025-02-20 00:56:52,724 - __main__ - ERROR - 詳細なエラー情報:
+Traceback (most recent call last):
+  File "D:\BMS\tools\markitdown\markitdown.py", line 228, in _convert_pdf
+    reader = PdfReader(str(file_path))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_reader.py", line 339, in __init__
+    self._encryption.verify(pwd) == PasswordType.NOT_DECRYPTED
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 785, in verify
+    key, rc = self.verify_v4(pwd) if self.algV <= 4 else self.verify_v5(pwd)
+                                                         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 836, in verify_v5
+    key = AlgV5.verify_owner_password(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 530, in verify_owner_password
+    AlgV5.calculate_hash(R, password, o_value[32:40], u_value[:48])
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 561, in calculate_hash
+    E = AES_CBC_encrypt(K[:16], K[16:32], K1 * 64)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 162, in AES_CBC_encrypt
+    raise DependencyError("PyCryptodome is required for AES algorithm")
+PyPDF2.errors.DependencyError: PyCryptodome is required for AES algorithm
+2025-02-20 00:56:52,735 - __main__ - ERROR - エラー発生: PyCryptodome is required for AES algorithm
+2025-02-20 00:56:52,736 - __main__ - ERROR - 詳細なエラー情報:
+Traceback (most recent call last):
+  File "D:\BMS\tools\markitdown\markitdown.py", line 105, in convert
+    result = converter(file_path)
+             ^^^^^^^^^^^^^^^^^^^^
+  File "D:\BMS\tools\markitdown\markitdown.py", line 228, in _convert_pdf
+    reader = PdfReader(str(file_path))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_reader.py", line 339, in __init__
+    self._encryption.verify(pwd) == PasswordType.NOT_DECRYPTED
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 785, in verify
+    key, rc = self.verify_v4(pwd) if self.algV <= 4 else self.verify_v5(pwd)
+                                                         ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 836, in verify_v5
+    key = AlgV5.verify_owner_password(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 530, in verify_owner_password
+    AlgV5.calculate_hash(R, password, o_value[32:40], u_value[:48])
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 561, in calculate_hash
+    E = AES_CBC_encrypt(K[:16], K[16:32], K1 * 64)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\3836\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\LocalCache\local-packages\Python312\site-packages\PyPDF2\_encryption.py", line 162, in AES_CBC_encrypt
+    raise DependencyError("PyCryptodome is required for AES algorithm")
+PyPDF2.errors.DependencyError: PyCryptodome is required for AES algorithm
